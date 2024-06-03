@@ -7,7 +7,7 @@ class ProductController extends BE_Controller{
         parent::__construct();
 
         $this->load->model('Common_model');
-        $this->load->library('Custom_Exception');
+        
     }
 
     public function getAll(){
