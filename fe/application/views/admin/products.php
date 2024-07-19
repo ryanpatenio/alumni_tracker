@@ -37,23 +37,8 @@
                 </thead>
                 
                 <tbody>
-             <?php 
              
-             $i = 1;
-             foreach ($Products as $product) { ?>
-               <tr class="row<?=$product['id']?>">
-                    <td class="num<?=$product['id']?>"><?=$i;?></td>
-                    <td class="product_name<?=$product['id']; ?>"><?= $product['product_name']; ?></td>
-                                 
-                    <td>
-                      <button type="button" id="edit-btn" data-id="<?= $product['id']; ?>" class="btn btn-warning bi bi-pencil"> Modify</button>
-                      <button type="button" id="delete-btn" data-id="<?= $product['id']; ?>" class="btn btn-danger bi bi-trash"> Delete</button>
-                    </td>
-                </tr>
-         <?php $i++;    }
-             
-             ?>
-
+       
             
                
 

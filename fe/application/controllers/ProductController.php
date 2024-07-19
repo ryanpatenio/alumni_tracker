@@ -12,7 +12,7 @@ class ProductController extends CI_Controller{
 		$api_endpoint 		= api_url('ProductController/GetAll');
 		$api_res 			= send_request($req_data, $api_endpoint);
 
-		$data['Products'] 	= $api_res['result'];
+		//$data['Products'] 	= $api_res['result'];
         $data['page_title'] = '';
         $data['sidebar']    = '_partials/sidebar';
 		$data['content']    = 'admin/Products'; 

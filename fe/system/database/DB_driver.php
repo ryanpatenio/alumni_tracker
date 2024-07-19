@@ -51,6 +51,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
  * @author		EllisLab Dev Team
  * @link		https://codeigniter.com/userguide3/database/
  */
+#THIS MODIFIED CODE WILL DISABLE ERRORS COZ OF PHP 8.2 SOME CLASSESS ARE DEPRECATED
+#[\AllowDynamicProperties]
+#END OF MODIFIED
 abstract class CI_DB_driver {
 
 	/**

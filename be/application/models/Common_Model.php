@@ -47,6 +47,48 @@ class Common_model extends CI_Model {
 	} // END method -- regular_query();
 
 
+    public function eloquent_query($query, $params = null)
+{
+    $this->load->database();
+
+    // Determine the query type (SELECT, INSERT, UPDATE)
+    $query_type = strtoupper(substr(trim($query), 0, 6));
+
+    try {
+        switch ($query_type) {
+            case 'SELECT':
+                $result = $this->db->query($query, $params);
+                if ($result) {
+                    return $result->result_array(); // Return the result for SELECT queries
+                }
+                break;
+
+            case 'INSERT':
+                $this->db->query($query, $params);
+                $insert_id = $this->db->insert_id();
+                return ['insert_id' => $insert_id]; // Return the insert ID for INSERT queries
+                break;
+
+            case 'UPDATE':
+                $result = $this->db->query($query, $params);
+                return $result; // Return true or false based on success for UPDATE queries
+                break;
+
+            default:
+                throw new Exception("Unsupported query type: $query_type");
+        }
+    } catch (Exception $e) {
+        get_instance()->load->library('Custom_Exception');
+        get_instance()->custom_exception->show_result([
+            'code'    => EXIT_BE_ERROR,
+            'message' => $e->getMessage()
+        ]);
+    }
+
+    return false; // Return false for unsupported query types
+}
+
+
 
 
     public function select_from_table($table, $params) {
