@@ -19,7 +19,7 @@ class BE_Controller extends CI_Controller
 
         $this->dbs[0] = $this->db;
 
-        
+       // $authorization 	= explode(",", $this->input->get_request_header('Authorization'));
         $message = json_decode(trim(file_get_contents('php://input')), true);
         $this->message = isset($message['message']) ? $message['message'] : '';
         $this->orig_message = $this->message; 

@@ -43,7 +43,7 @@ class ProductController extends BE_Controller{
         if(!empty($result)) {
             $id 		= $result['insert_id'];            
 
-            $query      = "SELECT * FROM Product WHERE Id = ?";
+            $query      = "SELECT * FROM Product WHERE prod_id = ?";
             $params     = [ $id ];
             $result     = $this->Common_model->regular_query($query, $params);
 

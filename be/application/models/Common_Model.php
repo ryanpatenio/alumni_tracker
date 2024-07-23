@@ -127,15 +127,17 @@ class Common_model extends CI_Model {
             return $query->result_array();
 
         } else {
-            return []; // Return empty array if no results found
+            return 1; // Return empty array if no results found
 
         }
 
     } // END method -- select_from_table();
 
     public function update($table, array $data, array $where) {
-        $this->db->where($where);
-        $this->db->update($table, $data);
+        // $this->db->where($where);
+        // $this->db->update($table, $data);
+        $query = $this->db->where($where)
+            ->update($table,$data);
 
         $error_code = $this->db->error()['code'];
 
@@ -149,7 +151,7 @@ class Common_model extends CI_Model {
 
         }
         
-        return $this->db->affected_rows();
+        return $query->affected_rows();
 
     } // END method -- update();
 

@@ -30,8 +30,7 @@ if( ! function_exists('error_code') ) {
 
         $response = get_instance()->Common_model->select_from_table('error_codes', [
             'select'    => 'controller, code, message',
-            'where'     => [
-                'LOWER(controller)'     => strtolower($controller),
+            'where'     => [               
                 'code'                  => str_pad($error_code, 4, '0', STR_PAD_LEFT)
             ],
             'limit'     => 1

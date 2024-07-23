@@ -6,7 +6,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>CI API<?= isset($page_title) && ! empty($page_title) ? ' | ' . $page_title : '' ?></title>
+  <title>Alumni Tracker<?= isset($page_title) && ! empty($page_title) ? ' | ' . $page_title : '' ?></title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -78,8 +78,8 @@
         </li> <!-- End Messages Nav -->
 
              <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown">
-            <img src="#" alt="Profile" class="rounded-circle">
-            <span class="d-none d-md-block dropdown-toggle ps-2">Ryan Wong</span>
+            <img src="#" alt="" class="rounded-circle">
+            <span class="d-none d-md-block dropdown-toggle ps-2"><?=$this->session->name; ?></span>
           </a><!-- End Profile Iamge Icon -->
 
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
@@ -109,7 +109,7 @@
             </li>
 
             <li>
-              <a class="dropdown-item d-flex align-items-center" id="sign_out_btn_ad">
+              <a class="dropdown-item d-flex align-items-center" data-bs-toggle="modal" data-bs-target="#logoutModal_AD" id="sign_out_btn_ad">
                 <i class="bi bi-box-arrow-right"></i>
                 <span>Sign Out</span>
               </a>

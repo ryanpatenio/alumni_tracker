@@ -7,7 +7,7 @@ if( ! function_exists('api_url') )
 	{
 
 		#put your backend URL here! modify this before anything else
-		$api_endpoint = 'http://localhost/ci_base_source/ci_backend/' . $url;
+		$api_endpoint = 'http://localhost/alumni_tracker/be/' . $url;
 
 		if(ENVIRONMENT == 'production') {
 			$api_endpoint = 'http://localhost/ci_api/ci_backend/' . $url; 
@@ -101,10 +101,10 @@ if( ! function_exists('send_request') ) {
 		} else {
 			$post_data = $user_data;
 
-			// if( ! isset($user_data['message']['info'])) {
-			// 	$post_data['message']['info'] = ['user' => get_instance()->session->username];
+			//  if( ! isset($user_data['message']['info'])) {
+			//  	$post_data['message']['info'] = ['user' => get_instance()->session->username];
 
-			// }
+			//  }
 
 		}
 

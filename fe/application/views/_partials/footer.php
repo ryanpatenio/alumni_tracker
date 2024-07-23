@@ -47,7 +47,7 @@
         <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
         <div class="modal-footer">
              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-          <a class="btn btn-primary" href="#" id="logout-admin">Logout</a>
+          <a class="btn btn-primary" href="<?=base_url('logout') ?>" id="logout-admin">Logout</a>
         </div>
       </div>
     </div>

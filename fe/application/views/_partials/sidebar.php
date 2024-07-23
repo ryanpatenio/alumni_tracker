@@ -7,7 +7,7 @@
 
         
       <li class="nav-item ">
-        <a class="nav-link collapsed pp" data-value="#" href="<?=base_url();?>">
+        <a class="nav-link collapsed pp" data-value="#" href="<?=base_url();?>dashboard">
           <i class="bi bi-bag-plus"></i>
           <span>Dashboard</span>
         </a>
