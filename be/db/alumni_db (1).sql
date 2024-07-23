@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 19, 2024 at 09:52 PM
+-- Generation Time: Jul 23, 2024 at 11:42 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -24,6 +24,37 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `access_token`
+--
+
+CREATE TABLE `access_token` (
+  `id` int(11) NOT NULL,
+  `token` varchar(255) NOT NULL DEFAULT '0',
+  `user_id` varchar(255) NOT NULL DEFAULT '0',
+  `ip_address` varchar(255) NOT NULL DEFAULT '0',
+  `update_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `access_token`
+--
+
+INSERT INTO `access_token` (`id`, `token`, `user_id`, `ip_address`, `update_date`) VALUES
+(47, 'e60af1879640c38650aa31849fa908044ddcaa314d956bae88e4651c6fdad42e', '1', '::1', '2024-07-24 05:32:40'),
+(48, 'c031bd0ad72efdc71919c1925c4d8d153774411470905642ac8edc8d2218441f', '1', '::1', '2024-07-24 05:32:40'),
+(49, '57084a81d67c6e1bfd5bf0605520ab7151ed491d1eafa50765cb1397718f2e2c', '1', '::1', '2024-07-24 05:32:40'),
+(50, '14114cf220bf1358c55422db806c668e8b1d23d5fb78a9aed78ef9be8533a702', '1', '::1', '2024-07-24 05:32:40'),
+(51, '8c47ca6aa319f319bb012f8b43c6d3c160b59125875ae1893c44757bc43692b1', '1', '::1', '2024-07-24 05:32:40'),
+(52, '44e84157b5530bac7e48a5796845a60ff385899619f45e4eaf2bfb3dd9e18cd5', '1', '::1', '2024-07-24 05:32:40'),
+(53, '2d211466cd99afa9a8baf36480d2b25dfee46332ceba7930d1f2972b3926d975', '1', '::1', '2024-07-24 05:32:40'),
+(54, '8becc4555123723ffb9b2eb510b5759ee0fdde1bb3c3ebaf5a7cfafe0da357dc', '1', '::1', '2024-07-24 05:32:40'),
+(55, '4a9ceae42c6d440c89a96fdff1a1405d2cb47530322996554e83eb6fce2465f5', '1', '::1', '2024-07-24 05:32:40'),
+(56, '4725f659f60adef4052d53a76886dd6427bfc1113ce07f50cc6a147ed78f6cac', '1', '::1', '2024-07-24 05:38:14'),
+(57, '19734215b047fe252e160d213e51a5dbff5f1580f2146f580172307e86d678c1', '1', '::1', '2024-07-24 05:38:59');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `advisor_records`
 --
 
@@ -36,6 +67,19 @@ CREATE TABLE `advisor_records` (
   `status` varchar(50) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `alumni_sessions`
+--
+
+CREATE TABLE `alumni_sessions` (
+  `id` varchar(128) NOT NULL,
+  `ip_address` varchar(45) NOT NULL,
+  `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
+  `data` blob NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -86,6 +130,27 @@ CREATE TABLE `courses` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `error_codes`
+--
+
+CREATE TABLE `error_codes` (
+  `id` int(11) NOT NULL,
+  `controller` varchar(255) NOT NULL,
+  `code` char(4) NOT NULL,
+  `message` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `error_codes`
+--
+
+INSERT INTO `error_codes` (`id`, `controller`, `code`, `message`) VALUES
+(1, '', '0002', 'Post Data Null'),
+(2, '', '0001', 'User Not Found');
 
 -- --------------------------------------------------------
 
@@ -191,12 +256,20 @@ CREATE TABLE `users` (
   `user_id` int(11) NOT NULL,
   `name` varchar(100) NOT NULL DEFAULT '0',
   `email` varchar(100) NOT NULL DEFAULT '0',
-  `password` varchar(250) NOT NULL DEFAULT '0',
+  `password` varchar(255) NOT NULL DEFAULT '0',
   `status` varchar(50) NOT NULL DEFAULT '0',
   `type` varchar(50) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_updated` datetime NOT NULL DEFAULT current_timestamp()
+  `last_login_date` datetime NOT NULL DEFAULT current_timestamp(),
+  `last_logout_date` datetime NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `status`, `type`, `date_created`, `last_login_date`, `last_logout_date`) VALUES
+(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$iCH3cS5XxaeUDQb9Q6uXBuccQdCP8/Oc.wGwDFSFdqPz26U76/1de', 'A', '1', '2024-07-20 16:49:26', '2024-07-24 05:38:59', '2024-07-24 05:39:04');
 
 -- --------------------------------------------------------
 
@@ -252,6 +325,12 @@ CREATE TABLE `user_logs` (
 --
 
 --
+-- Indexes for table `access_token`
+--
+ALTER TABLE `access_token`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `advisor_records`
 --
 ALTER TABLE `advisor_records`
@@ -260,6 +339,13 @@ ALTER TABLE `advisor_records`
   ADD KEY `sy_id` (`sy_id`),
   ADD KEY `course_id` (`course_id`),
   ADD KEY `sect_id` (`sect_id`);
+
+--
+-- Indexes for table `alumni_sessions`
+--
+ALTER TABLE `alumni_sessions`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ci_sessions_timestamp` (`timestamp`);
 
 --
 -- Indexes for table `batch`
@@ -278,6 +364,12 @@ ALTER TABLE `capabilities`
 --
 ALTER TABLE `courses`
   ADD PRIMARY KEY (`course_id`);
+
+--
+-- Indexes for table `error_codes`
+--
+ALTER TABLE `error_codes`
+  ADD PRIMARY KEY (`id`);
 
 --
 -- Indexes for table `number`
@@ -343,6 +435,12 @@ ALTER TABLE `user_logs`
 --
 
 --
+-- AUTO_INCREMENT for table `access_token`
+--
+ALTER TABLE `access_token`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+
+--
 -- AUTO_INCREMENT for table `advisor_records`
 --
 ALTER TABLE `advisor_records`
@@ -365,6 +463,12 @@ ALTER TABLE `capabilities`
 --
 ALTER TABLE `courses`
   MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `error_codes`
+--
+ALTER TABLE `error_codes`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `number`
@@ -400,7 +504,7 @@ ALTER TABLE `sy`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user_activity_logs`
