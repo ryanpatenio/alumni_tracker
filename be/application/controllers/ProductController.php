@@ -11,7 +11,7 @@ class ProductController extends BE_Controller{
     }
 
     public function getAll(){
-        $query = "SELECT * FROM product WHERE Active = 'A' ORDER BY id";
+        $query = "SELECT * FROM users";
         $result = $this->Common_model->regular_query($query);
 
         $message = [

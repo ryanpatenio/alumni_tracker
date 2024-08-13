@@ -27,6 +27,12 @@
             <span>Professor</span>
             </a>       
         </li><!-- End Product Page Nav -->
+        <li class="nav-item ">
+            <a class="nav-link collapsed pp" data-value="#" href="<?=base_url();?>adv-records">
+            <i class="bi bi-bag-plus"></i>
+            <span>Advisory Records</span>
+            </a>       
+        </li><!-- End Product Page Nav -->
 
         <li class="nav-item ">
             <a class="nav-link collapsed pp" data-value="#" href="<?=base_url();?>batch">
