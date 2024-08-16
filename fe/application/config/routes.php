@@ -10,6 +10,9 @@ $route['batch'] = 'BatchController';
 $route['courses'] = 'CourseController';
 $route['adv-records'] = 'AdvisoryRecordsController';
 $route['sections'] = 'SectionController';
+$route['sy'] = 'SYController';
+$route['users'] = 'UsersController';
+$route['profile'] = 'UserProfileController';
 $route['product'] = 'productController';
 
 $route['default_controller'] = 'authController';

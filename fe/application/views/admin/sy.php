@@ -1,12 +1,12 @@
 
 <main id="main" class="main">
     <div class="pageTitle">
-      <h1>Students</h1>
+      <h1>School Year</h1>
       <nav>
         <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="<?=base_url();?>students">Home</a></li>
+          <li class="breadcrumb-item"><a href="<?=base_url();?>sy">Home</a></li>
           <li class="breadcrumb-item">Pages</li>
-          <li class="breadcrumb-item active">Students</li>
+          <li class="breadcrumb-item active">School Year</li>
         </ol>
       </nav>
     </div><!-- End Page Title -->
@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
         </div>
 
           <div class="card-body">
@@ -30,31 +30,18 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Alumni Name</th> 
+                    <th>S.Y.</th> 
                           
                     <th>Action</th>
                   </tr>
                 </thead>
                 
                 <tbody>
-                <?php
-                $i = 1;
-                foreach ($Students as $student) { ?>
-                  
-                  <tr>
-                      <td><?= $i; ?></td>
-                      <td><?= $student['name'];?></td>
-                      
-                      <td>
-                        <button type="button" id="edit_job_btn" data-id="<?= $student['student_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
-                        <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
-                      </td>
-                  </tr>
+             
+       
+            
+               
 
-               <?php $i++; }
-                             
-                
-                ?>  
                 </tbody>
               </table>
             </div>
@@ -72,11 +59,11 @@
 <!--------------All Modal-------------------->
   
 
-    <div class="modal fade" id="addModal" tabindex="-1">
+    <div class="modal fade" id="productModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Encode New Alumni</h5>
+              <h5 class="modal-title">Encode New School Year</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -86,28 +73,13 @@
 
                   <div class="row mb-2">
                     <div class="col">
-                      <label for="validationDefault01" class="form-label">Student Name</label>                  
-                      <input type="text" class="form-control" name="product_name" id=""  required>  
+                      <label for="validationDefault01" class="form-label">SY Name</label>                  
+                      <input type="text" class="form-control" name="prof_name" id=""  required>  
                     </div>
+                    
                   </div>
-
-                  <div class="row mb-2">
-                    <div class="col">
-                        <label for="" class="form-label">BATCH</label>
-                       <select name="batch" id="" class="form-select">
-                        <option value="BATCH1">BATCH 1</option>
-                       </select>
-                    </div>
-                  </div>
-                  <div class="row mb-2">
-                    <div class="col">
-                        <label for="" class="form-label">PROFESSOR</label>
-                        <select name="prof" id="prof" class="form-select">
-                          <option value="">Henry Lim</option>
-                        </select>
-                    </div>
-                  </div>
-                 
+                  
+        
                   
                 </div>                       
               
@@ -158,5 +130,5 @@
 <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
- <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/student.js"></script>
+ <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/Product.js"></script>
   

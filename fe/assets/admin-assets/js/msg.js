@@ -47,39 +47,7 @@ const modalClose = (modalName) => {
 	$(modalName).modal("hide");
 };
 
-// for AJAX
 
-function ajaxPost(_url, _parameters, _successCallback) {
-	// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', true);
-	// showBlurLoading();
-
-	$.ajax({
-		url: _url,
-		type: "POST",
-		dataType: "json",
-		data: _parameters,
-	})
-		.done(function (response) {
-			_successCallback(response);
-
-			// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', false);
-			// hideBlurLoading();
-		})
-		.fail(function (xhr, status) {
-			console.log("URL: " + _url);
-			console.log("AJAX Request Error.");
-			console.log("Status: " + status);
-
-			console.log("/** --- --- --- */");
-
-			console.log("XHR: ");
-			console.log(xhr);
-			// errorSwal(xhr.responseText);
-
-			// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', false);
-			// hideBlurLoading();
-		});
-}
 
 function successSwal(_message, _redirect = "") {
 	swal({
@@ -108,10 +76,89 @@ function successSwal(_message, _redirect = "") {
 	});
 }
 
-function errorSwal(_message) {
-	swal({
-		title: "Error!",
-		html: _message,
-		type: "error",
-	});
+
+function AjaxPost(url, method, formData, beforeSendCallback, successCallback, completeCallback) {
+    $.ajax({
+        url: url,
+        method: method || 'POST',  // Default to POST if no method is provided
+        data: formData,
+        dataType: 'json',
+
+        beforeSend: function() {
+            if (beforeSendCallback && typeof beforeSendCallback === 'function') {
+                beforeSendCallback();
+            }
+        },
+
+        success: function(response) {
+            if (successCallback && typeof successCallback === 'function') {
+                successCallback(response);
+            }
+        },
+
+        complete: function() {
+            if (completeCallback && typeof completeCallback === 'function') {
+                completeCallback();
+            }
+        },
+
+        error: function(xhr, status, error) {
+            console.error("AJAX Error: ", status, error);
+			console.log(xhr.responseText);
+        }
+    });
+}
+
+function loader(_status){
+	_status == false;
+  
+	if(_status === true){
+	  $('#loader').show();
+	}else{
+	  $('#loader').hide();
+	}
+   }
+
+   function Redirect(_url,_logs = ""){
+
+	if(_logs == ""){
+	  setTimeout(function() {
+		// Delay 1 second to proceed
+		window.location.href = _url;
+  
+	  }, 1000);
+  
+	}else{
+	  console.log(_logs);
+  
+	  setTimeout(function() {
+		// Delay 1 second to proceed
+		window.location.href = _url;
+  
+	  }, 1000);
+	}
+  
+	
+   }
+
+
+   function loader(_status){
+	_status == false;
+  
+	if(_status === true){
+	  $('#loader').show();
+	}else{
+	  $('#loader').hide();
+	}
+   }
+
+   function logs(_logs) {
+
+    if (_logs === true) {
+      console.log('Sending Request to API...');
+    } else if (_logs === false) {
+      console.log('Request Completed...');
+    } else {
+      console.log(_logs);
+    }
 }

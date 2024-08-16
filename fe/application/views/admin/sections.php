@@ -30,7 +30,7 @@
                 <thead>
                   <tr>
                     <th>No.</th>
-                    <th>Batch Name</th> 
+                    <th>Section Name</th> 
                           
                     <th>Action</th>
                   </tr>
@@ -60,10 +60,10 @@
   
 
     <div class="modal fade" id="productModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Encode New Batch</h5>
+              <h5 class="modal-title">Encode New Section</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -73,26 +73,13 @@
 
                   <div class="row mb-2">
                     <div class="col">
-                      <label for="validationDefault01" class="form-label">Batch Name</label>                  
+                      <label for="validationDefault01" class="form-label">Sect Name</label>                  
                       <input type="text" class="form-control" name="prof_name" id=""  required>  
                     </div>
                     
                   </div>
                   
-                  <div class="row mb-2">
-                    <div class="col">
-                      <label for="validationDefault01" class="form-label">Advisory Record</label>                  
-                      <select name="adv-records" id="adv-records" class="form-control">
-                        <option value="">Prof Ryan SY-2023 | BSIT</option>
-                      </select>  
-                    </div>
-                    
-                  </div>
-
-
-                  
-
-                 
+        
                   
                 </div>                       
               

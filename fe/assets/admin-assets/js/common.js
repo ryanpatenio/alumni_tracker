@@ -1,34 +1,34 @@
-function ajaxPost(_url, _parameters, _successCallback) {
-	// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', true);
-	// showBlurLoading();
+// function ajaxPost(_url, _parameters, _successCallback) {
+// 	// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', true);
+// 	// showBlurLoading();
 
-	$.ajax({
-		url: _url,
-		type: "POST",
-		dataType: "json",
-		data: _parameters,
-	})
-		.done(function (response) {
-			_successCallback(response);
+// 	$.ajax({
+// 		url: _url,
+// 		type: "POST",
+// 		dataType: "json",
+// 		data: _parameters,
+// 	})
+// 		.done(function (response) {
+// 			_successCallback(response);
 
-			// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', false);
-			// hideBlurLoading();
-		})
-		.fail(function (xhr, status) {
-			console.log("URL: " + _url);
-			console.log("AJAX Request Error.");
-			console.log("Status: " + status);
+// 			// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', false);
+// 			// hideBlurLoading();
+// 		})
+// 		.fail(function (xhr, status) {
+// 			console.log("URL: " + _url);
+// 			console.log("AJAX Request Error.");
+// 			console.log("Status: " + status);
 
-			console.log("/** --- --- --- */");
+// 			console.log("/** --- --- --- */");
 
-			console.log("XHR: ");
-			console.log(xhr);
-			// errorSwal(xhr.responseText);
+// 			console.log("XHR: ");
+// 			console.log(xhr);
+// 			// errorSwal(xhr.responseText);
 
-			// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', false);
-			// hideBlurLoading();
-		});
-}
+// 			// $( 'button, button[type=submit], input[type=submit]' ).prop('disabled', false);
+// 			// hideBlurLoading();
+// 		});
+// }
 
 function successSwal(_message, _redirect = "") {
 	swal({
@@ -64,3 +64,4 @@ function errorSwal(_message) {
 		type: "error",
 	});
 }
+

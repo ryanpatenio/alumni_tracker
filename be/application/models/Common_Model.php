@@ -28,7 +28,7 @@ class Common_model extends CI_Model {
 
         switch ($query_type) {
             case 'SELECT':
-                    return $result->result_array(); //result(); // For SELECT queries, return the result
+                    return $result->result(); //result(); // For SELECT queries, return the result
                 break;
                 
             case 'INSERT':
@@ -60,7 +60,7 @@ class Common_model extends CI_Model {
                 $result = $this->db->query($query, $params);
                 if ($result) {
                     return $result->result_array(); // Return the result for SELECT queries
-                }
+                } 
                 break;
 
             case 'INSERT':
