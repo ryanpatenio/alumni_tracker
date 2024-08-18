@@ -1,9 +1,8 @@
 <?php 
 
 #note!!!
-#coz of this customize form_helper some of the default CI method override
+#coz of this customize form_helper some of the default CI method override ex: [form_error]
 #sample the form error method
-
 
 
 #$text = "<p>Hello <b>World</b>!</p>";
@@ -27,7 +26,10 @@ if ( ! function_exists('set_val_rule')) {
 }
 
 
-
+#custom json respose with 3 params
+#@params[1] = message or text
+#@params[2] = status code [400,500,401]
+#@params[3] = remove HTML and PHP tags from a string but this code is no longer to be used
 if( ! function_exists('json_response')){
 
     function json_response($message, $statusCode,$error = null) {
@@ -74,5 +76,17 @@ if( ! function_exists('arr')){
             'rules' => $rules
         );
     
+    }
+}
+
+if( ! function_exists('form_error_array')){
+
+    function form_error_array(){
+
+        $CI =& get_instance();  // Get CodeIgniter instance
+        $CI->load->library('form_validation');
+
+        return $CI->form_validation->error_array();
+        
     }
 }

@@ -22,7 +22,7 @@ class StudentController extends BE_Controller{
          ];
 
          
-        $this->custom_exception->show_result([
+        $this->be_exception->show_result([
             'code'      => EXIT_SUCCESS,
             'message'   => 'OK',
             'data'    => $result

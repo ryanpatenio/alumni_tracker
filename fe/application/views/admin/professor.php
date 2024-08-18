@@ -22,6 +22,7 @@
           <div class="card-header">
             <i class="fas fa-table"></i>
             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
+           <input type="button" class="btn btn-warning" value="Get" id="get">
         </div>
 
           <div class="card-body">

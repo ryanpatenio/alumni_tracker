@@ -19,7 +19,7 @@ class ProductController extends BE_Controller{
             'message'   => 'No records to display.'
          ];
     
-        $this->custom_exception->show_result([
+        $this->be_exception->show_result([
             'code'      => EXIT_SUCCESS,
             'message'   => 'OK',
             'result'    => $result
@@ -61,7 +61,7 @@ class ProductController extends BE_Controller{
             }
         }
 
-        $this->custom_exception->show_result($message);
+        $this->be_exception->show_result($message);
 
     }
 
@@ -88,10 +88,10 @@ class ProductController extends BE_Controller{
                 ];
             }
 
-            $this->custom_exception->show_result($message);
+            $this->be_exception->show_result($message);
 
         } catch (Exception $e) {
-            $this->custom_exception->show_error([
+            $this->be_exception->show_error([
                 'code' => EXIT_BE_ERROR,
                 'message' => $e->getMessage()
             ]);
@@ -137,7 +137,7 @@ class ProductController extends BE_Controller{
             }
         }
 
-        $this->custom_exception->show_result($message);
+        $this->be_exception->show_result($message);
     }
 
     public function Delete()
@@ -162,7 +162,7 @@ class ProductController extends BE_Controller{
             ];
         }
 
-        $this->custom_exception->show_result($message);
+        $this->be_exception->show_result($message);
     }
 }
 

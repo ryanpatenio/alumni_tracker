@@ -13,14 +13,16 @@ class Common_model extends CI_Model {
 	{	
 		$result     = $this->db->query($query, $params);
         $error_code = $this->db->error()['code'];
+       
 
         if ($error_code != 0) {
-            get_instance()->load->library('Custom_Exception');
+            get_instance()->load->library('BE_Exception');
 
-            get_instance()->custom_exception->show_result([
+            get_instance()->be_exception->show_result([
                 'code'      => EXIT_BE_ERROR,
                 'message'   => $this->db->error()
             ]);
+           
 
         }
 
@@ -78,11 +80,13 @@ class Common_model extends CI_Model {
                 throw new Exception("Unsupported query type: $query_type");
         }
     } catch (Exception $e) {
-        get_instance()->load->library('Custom_Exception');
-        get_instance()->custom_exception->show_result([
+         get_instance()->load->library('BE_Exception');
+        get_instance()->be_exception->show_result([
             'code'    => EXIT_BE_ERROR,
             'message' => $e->getMessage()
         ]);
+
+       
     }
 
     return false; // Return false for unsupported query types
@@ -142,9 +146,9 @@ class Common_model extends CI_Model {
         $error_code = $this->db->error()['code'];
 
         if ($error_code != 0) {
-            get_instance()->load->library('Custom_Exception');
+            get_instance()->load->library('BE_Exception');
 
-            get_instance()->custom_exception->show_result([
+            get_instance()->be_exception->show_result([
                 'code'      => EXIT_BE_ERROR,
                 'message'   => $this->db->error()
             ]);
@@ -162,9 +166,9 @@ class Common_model extends CI_Model {
         $error_code = $this->db->error()['code'];
 
         if ($error_code != 0) {
-            get_instance()->load->library('Custom_Exception');
+            get_instance()->load->library('BE_Exception');
 
-            get_instance()->custom_exception->show_result([
+            get_instance()->be_exception->show_result([
                 'code'      => EXIT_BE_ERROR,
                 'message'   => $this->db->error()
             ]);

@@ -14,7 +14,7 @@ class BE_Controller extends CI_Controller
     {
         parent::__construct();
 
-        $this->load->library('Custom_Exception');
+        $this->load->library('BE_Exception');
         $this->load->database();
 
         $this->dbs[0] = $this->db;
@@ -25,7 +25,7 @@ class BE_Controller extends CI_Controller
         $this->orig_message = $this->message; 
 
         $this->init_access_log();
-        $this->custom_exception->init($this->dbs, $this->log_data);
+        $this->be_exception->init($this->dbs, $this->log_data);
 
         $this->check_request_method();
         $this->check_content_type();
@@ -39,7 +39,7 @@ class BE_Controller extends CI_Controller
                 'message' => 'Request must be POST'
             );
 
-            $this->custom_exception->show_result($msg);
+            $this->be_exception->show_result($msg);
         }
     }
 
@@ -51,7 +51,7 @@ class BE_Controller extends CI_Controller
                 'message' => 'Content type must be application/json'
             );
 
-            $this->custom_exception->show_result($msg);
+            $this->be_exception->show_result($msg);
         }
     }
 

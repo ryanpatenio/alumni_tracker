@@ -21,7 +21,7 @@ class AuthController extends BE_Controller{
 
 
         if(empty($username) || empty($password)) {
-			$this->custom_exception->show_result([
+			$this->be_exception->show_result([
 				'code'		=> EXIT_BE_ERROR,
 				'message'	=> error_code(0002)['pretty'],
 			]);
@@ -45,7 +45,7 @@ class AuthController extends BE_Controller{
 
 		
         if (empty($user_inquire))  {
-			 $this->custom_exception->show_result([
+			 $this->be_exception->show_result([
 				'code'		=> EXIT_ERROR,
 				'message'	=> 'Invalid Username OR Password!'
 			]);
@@ -53,10 +53,10 @@ class AuthController extends BE_Controller{
 		}
 
 		$user = $user_inquire[0];
-        $pw_hash = $user['password'];
+        $pw_hash = $user->password;
 
 		if( ! password_verify($password, $pw_hash)) {
-			$this->custom_exception->show_result([
+			$this->be_exception->show_result([
 				'code'		=> EXIT_BE_ERROR,
 				'message'	=> 'Invalid Username OR Password'
 			]);
@@ -67,12 +67,12 @@ class AuthController extends BE_Controller{
         
 		$insert_data = [
 			'token'			=> $this->_generate_token(),
-			'user_id'		=> $user['user_id'],
+			'user_id'		=> $user->user_id,
 			'ip_address'	=> $this->input->ip_address()
 		];	
 
 
-		$n_email = $user['email'];
+		$n_email = $user->email;
 		$update_query = "UPDATE users set last_login_date = ? WHERE email = ?";
 		$param = [current_datetime(),$n_email];
 
@@ -95,14 +95,14 @@ class AuthController extends BE_Controller{
         ];
 
 
-        $this->custom_exception->show_result([
+        $this->be_exception->show_result([
 			'code'		=> EXIT_SUCCESS,
 			'message'	=> OK,
 			'token'     =>$insert_data['token'],
 				'data'		=> [
 				'email'					=> $n_email,
-				'name'			=> $user['name'],
-				'type'					=> $user['type'],
+				'name'			=> $user->name,
+				'type'					=> $user->type,
 				
 			],
 			'capabilities'	=> $user_capabilities

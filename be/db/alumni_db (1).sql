@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 23, 2024 at 11:42 PM
+-- Generation Time: Aug 18, 2024 at 10:21 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -50,7 +50,10 @@ INSERT INTO `access_token` (`id`, `token`, `user_id`, `ip_address`, `update_date
 (54, '8becc4555123723ffb9b2eb510b5759ee0fdde1bb3c3ebaf5a7cfafe0da357dc', '1', '::1', '2024-07-24 05:32:40'),
 (55, '4a9ceae42c6d440c89a96fdff1a1405d2cb47530322996554e83eb6fce2465f5', '1', '::1', '2024-07-24 05:32:40'),
 (56, '4725f659f60adef4052d53a76886dd6427bfc1113ce07f50cc6a147ed78f6cac', '1', '::1', '2024-07-24 05:38:14'),
-(57, '19734215b047fe252e160d213e51a5dbff5f1580f2146f580172307e86d678c1', '1', '::1', '2024-07-24 05:38:59');
+(57, '19734215b047fe252e160d213e51a5dbff5f1580f2146f580172307e86d678c1', '1', '::1', '2024-07-24 05:38:59'),
+(58, '2bcd5ca726664f0637aca12387c7cf8917b48dc66737b12f1a0e2c30f99ceb6d', '1', '::1', '2024-08-13 21:39:55'),
+(59, 'd4153747a2ce7aa4fbcbe97c286c3c9396eb0243a3eb0840ed19b7f7b78d824d', '1', '::1', '2024-08-19 03:39:02'),
+(60, '57a5389a992a8dd4880f87f0c0da4c7c7ce37432023410a94cfbc543652a4d5e', '1', '::1', '2024-08-19 03:40:13');
 
 -- --------------------------------------------------------
 
@@ -90,6 +93,7 @@ CREATE TABLE `alumni_sessions` (
 
 CREATE TABLE `batch` (
   `batch_id` int(11) NOT NULL,
+  `batch_name` varchar(100) NOT NULL DEFAULT '0',
   `adviser_id` int(11) NOT NULL DEFAULT 0,
   `student_id` int(11) NOT NULL DEFAULT 0,
   `date_created` datetime NOT NULL DEFAULT current_timestamp()
@@ -228,9 +232,17 @@ CREATE TABLE `students` (
   `name` varchar(100) NOT NULL DEFAULT '0',
   `email` varchar(100) NOT NULL DEFAULT '0',
   `contact` varchar(100) NOT NULL DEFAULT '0',
-  `sy_id` int(11) NOT NULL DEFAULT 0,
+  `batch_id` int(11) NOT NULL DEFAULT 0,
   `student_status` varchar(50) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `students`
+--
+
+INSERT INTO `students` (`student_id`, `name`, `email`, `contact`, `batch_id`, `student_status`) VALUES
+(1, 'James Hunter', 'James_hunter@gmail.com', '0399493992', 1, 'A'),
+(2, 'Crazy Slot', 'Crazy@gmail.com', '0948838883', 1, 'A');
 
 -- --------------------------------------------------------
 
@@ -269,7 +281,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `status`, `type`, `date_created`, `last_login_date`, `last_logout_date`) VALUES
-(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$iCH3cS5XxaeUDQb9Q6uXBuccQdCP8/Oc.wGwDFSFdqPz26U76/1de', 'A', '1', '2024-07-20 16:49:26', '2024-07-24 05:38:59', '2024-07-24 05:39:04');
+(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$iCH3cS5XxaeUDQb9Q6uXBuccQdCP8/Oc.wGwDFSFdqPz26U76/1de', 'A', '1', '2024-07-20 16:49:26', '2024-08-19 03:40:13', '2024-08-19 03:39:57');
 
 -- --------------------------------------------------------
 
@@ -351,7 +363,9 @@ ALTER TABLE `alumni_sessions`
 -- Indexes for table `batch`
 --
 ALTER TABLE `batch`
-  ADD PRIMARY KEY (`batch_id`);
+  ADD PRIMARY KEY (`batch_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `adviser_id` (`adviser_id`);
 
 --
 -- Indexes for table `capabilities`
@@ -394,7 +408,7 @@ ALTER TABLE `sections`
 --
 ALTER TABLE `students`
   ADD PRIMARY KEY (`student_id`),
-  ADD KEY `sy_id` (`sy_id`);
+  ADD KEY `sy_id` (`batch_id`);
 
 --
 -- Indexes for table `sy`
@@ -438,7 +452,7 @@ ALTER TABLE `user_logs`
 -- AUTO_INCREMENT for table `access_token`
 --
 ALTER TABLE `access_token`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
 
 --
 -- AUTO_INCREMENT for table `advisor_records`
@@ -480,7 +494,7 @@ ALTER TABLE `number`
 -- AUTO_INCREMENT for table `professor`
 --
 ALTER TABLE `professor`
-  MODIFY `prof_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `prof_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `sections`
@@ -492,7 +506,7 @@ ALTER TABLE `sections`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sy`

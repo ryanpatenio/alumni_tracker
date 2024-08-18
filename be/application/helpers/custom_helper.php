@@ -16,6 +16,32 @@ if( ! function_exists('current_datetime') ) {
     }
 }
 
+if( ! function_exists('err_response')){
+
+    function err_response($message,$code, $statusCode = null) {
+        $CI =& get_instance();  // Get CodeIgniter instance
+            $CI->output
+            ->set_content_type('application/json')
+            ->set_status_header($statusCode)
+            ->set_output(json_encode(['message' => $message,'code' => $code]));
+    
+    }
+}
+
+#natural response
+if( ! function_exists('_response')){
+    
+    function _response($message){
+        
+        header('Cache-Control: no-cache, must-revalidate');
+        header("HTTP/1.1 200 OK");
+        header('Content-Type: application/json');
+
+        echo json_encode($message);
+        exit;
+    }
+
+}
 
 
 

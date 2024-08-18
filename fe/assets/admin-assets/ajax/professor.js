@@ -22,7 +22,12 @@ $(document).ready(function(){
             },
             function(response) {
                 // Success callback
-                res(response)
+                
+                if(response.code != 0){
+                    message('An Error Occured While Processing your request.','error');
+                }
+                message('New Record added!','success');
+                formModalClose(addModal,$('#addForm'));
             },
             function() {
                 // Complete callback
@@ -32,5 +37,31 @@ $(document).ready(function(){
         );
        
     });
+
+
+    $(document).on('click','#get',function(e){
+        e.preventDefault();
+
+        $url = baseUrl + "professorController/getProfessor";
+        let ID = 1;
+        AjaxPost(
+            $url,
+            'POST',
+            {ID:ID},
+            function() {
+                // Before send callback
+                logs(true);
+            },
+            function(response) {
+                // Success callback
+                
+               res(response)
+            },
+            function() {
+                // Complete callback
+                logs(false);
+            }
+        )
+    })
 
 });
