@@ -30,7 +30,7 @@ class ProfessorController extends BE_Controller{
         $receiveData = $this->message;
         
         $name = $receiveData['prof_name'];
-        $email = $receiveData['email'];
+        $email = $receiveData['email']; #check email is exist
         $contact = $receiveData['contact'];
         $address = $receiveData['address'];
         $degree = $receiveData['degree'];
@@ -63,7 +63,7 @@ class ProfessorController extends BE_Controller{
         $id = $this->message['filter'];
 
         $query = "SELECT * FROM professor WHERE prof_id = ?";
-        $param =[$id];
+        $param = [$id];
 
         $result = $this->Common_model->regular_query($query,$param);
 
@@ -94,10 +94,56 @@ class ProfessorController extends BE_Controller{
     }
 
     public function update(){
+        $receiveData = $this->message;
+
+        $prof_name = $receiveData['prof_name'];
+        $email = $receiveData['email'];
+        $contact = $receiveData['contact'];
+        $address = $receiveData['address'];
+        $degree = $receiveData['degree'];
+        $id = $receiveData['id'];
+
+        $query = "UPDATE professor SET name = ?,email = ?, contact = ?, address = ? ,degree = ? WHERE id = ?";
+        $params = [$prof_name,$email,$contact,$address,$degree,$id];
+
+        $result = $this->Common_model->regular_query($query,$params);
+
+        if(! $result){
+            $message = [
+                'code' => EXIT_BE_ERROR,
+                'message' => 'An Error Occured While Processing Your Request.'
+            ];
+        }
+
+        $message = [
+            'code' => EXIT_SUCCESS,
+            'message' => 'ok'
+        ];
+
+        $this->be_exception->show_result($message);
 
     }
 
     public function destroy(){
-        
+        $id = $this->message['filter'];
+
+        $query = "UPDATE professor SET status = 'U' WHERE id = ?";
+        $param = [$id];
+
+        $result = $this->Common_model->regular_query($query,$param);
+
+        if( ! $result){
+            $message = [
+                'code' => EXIT_BE_ERROR,
+                'message' => 'An Error Occured While Processing Your Request.'
+            ];
+        }
+
+        $message = [
+            'code' => EXIT_SUCCESS,
+            'message' => 'ok'
+        ];
+
+        $this->be_exception->show_result($message);
     }
 }

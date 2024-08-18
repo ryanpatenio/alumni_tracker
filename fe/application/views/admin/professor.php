@@ -22,7 +22,7 @@
           <div class="card-header">
             <i class="fas fa-table"></i>
             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
-           <input type="button" class="btn btn-warning" value="Get" id="get">
+           <!-- <input type="button" class="btn btn-warning" value="Get" id="get"> -->
         </div>
 
           <div class="card-body">
@@ -38,11 +38,25 @@
                 </thead>
                 
                 <tbody>
-             
-       
-            
-               
+              <?php
+              $i = 1;
 
+              foreach ($professors as $professor) {
+                ?>
+
+                <tr>
+                  <td><?=$i; ?></td>
+                  <td><?=$professor['name']; ?></td>
+                  <td>
+                     <button type="button" id="edit_btn" data-id="<?= $professor['prof_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+                  </td>
+                </tr> 
+
+      <?php $i++;
+              }
+              
+              ?>
+                
                 </tbody>
               </table>
             </div>
@@ -75,7 +89,7 @@
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Professor Name</label>                  
-                      <input type="text" class="form-control" name="prof_name" id="">  
+                      <input type="text" class="form-control" name="prof_name" id="" required>  
                     </div>
                     <div class="col">
                         <label for="" class="form-label">Email</label>
@@ -90,7 +104,7 @@
                     </div>
                     <div class="col">
                         <label for="" class="form-label">Address</label>
-                        <input type="text" class="form-control" name="address">
+                        <input type="text" class="form-control" name="address" required>
                     </div>
                   </div>
 
@@ -98,7 +112,7 @@
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Degree</label>                  
-                      <input type="text" class="form-control" name="degree" id="">  
+                      <input type="text" class="form-control" name="degree" id="" required>  
                     </div>
                    
                   </div>
@@ -128,7 +142,7 @@
               <form method="POST" id="updateForm" >
 
                 <!-- hidden product ID --> 
-                <input type="hidden" id="product-id" name="product_id">
+                <input type="hidden" id="id" name="id">
                 <div class="card-body">
 
                   <div class="row mb-2">

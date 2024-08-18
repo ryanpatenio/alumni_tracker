@@ -17,7 +17,7 @@ class ProfessorController extends CI_Controller{
         $api_endpoint 		= api_url('ProfessorController/GetAll');
         $api_res 			= send_request($req_data, $api_endpoint);
     
-        //$data['Products'] 	= $api_res['result'];
+        $data['professors'] 	= $api_res['data'];
         $data['page_title'] = '';
         $data['sidebar']    = '_partials/sidebar';
         $data['content']    = 'admin/professor'; 
@@ -92,5 +92,51 @@ class ProfessorController extends CI_Controller{
         $api_req = send_request($req_data,$api_url);
 
         json_response($api_req,200);
+    }
+
+    public function update(){
+
+        $fields = array(
+            'prof_name' => arr('Professor Name','required'),
+            'email'     => arr('Email','required'),
+            'address'   => arr('Address','required'),
+            'contact'   => arr('Contact','max_length[11]'),
+            'degree'    => arr('Degree','required'),
+            
+            #sample you can add some rules
+            #'sample'  => arr('label',array('required','maxlength[11]','valid_email'));
+        );
+
+        foreach ($fields as $field => $details) {
+            set_val_rule($field, $details['label'],$details['rules']);
+        }
+
+         # Run validation
+         if ($this->form_validation->run() == FALSE) {
+            #collect Errors
+           $errors = form_error_array();
+            
+            // Send JSON response with errors
+            json_response($errors, 400);
+
+        }else{
+            $input = $this->input->post();
+
+            $req_data 		= [ 'message'	=> [
+				'prof_name'          	=> $input['prof_name'],
+                'email'              	=> $input['email'],
+                'address'       	=> $input['address'],
+                'contact'          => $input['contact'],
+                'degree'           => $input['degree'],
+                'id'               => $input['id'],
+              
+			    ] 
+		    ];
+
+            $api_url = api_url('professorController/update');
+            $api_req = send_request($req_data,$api_url);
+
+            json_response($api_req,200);
+        }
     }
 }
