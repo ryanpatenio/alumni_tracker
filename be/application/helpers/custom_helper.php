@@ -89,4 +89,41 @@ if( ! function_exists('error_code') ) {
         return $return;
 
     }
+
+    if (!function_exists('message')) {
+
+        function message($code, $message = '', $data = null)
+        {
+            // Automatically set message for EXIT_BE_ERROR
+            if ($code === EXIT_BE_ERROR && empty($message)) {
+                $message = 'An error occurred while processing your request';
+            }
+
+            //Automatically set message for EXIT_SUCCESS
+            if($code === EXIT_SUCCESS && empty($message)){
+                $message = 'OK';
+            }
+
+            #message == 0 is for success
+            #this code if the 3rd param[$data] is not null
+            if($code === EXIT_SUCCESS && $message == 0){
+                $message = 'OK';
+            }
+    
+            // Prepare the message array
+            $msg = [
+                'code' => $code,
+                'message' => $message
+            ];
+    
+            // Include data if it is not null or empty
+            if (!empty($data)) {
+                $msg['data'] = $data;
+            }
+           
+    
+            return $msg;
+        }
+    }
+    
 }

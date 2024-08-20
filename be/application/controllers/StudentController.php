@@ -21,12 +21,15 @@ class StudentController extends BE_Controller{
             'message'   => 'No records to display.'
          ];
 
-         
-        $this->be_exception->show_result([
+         if( !empty($result)){
+           $message = [
             'code'      => EXIT_SUCCESS,
             'message'   => 'OK',
             'data'    => $result
-        ]);
+           ];
+         }
+         
+        $this->be_exception->show_result($message);
     }
 
     public function store(){
@@ -66,6 +69,8 @@ class StudentController extends BE_Controller{
 
         $result = $this->Common_model->regular_query($query,$param);
 
+        $message = message(EXIT_BE_ERROR);
+
         if(empty($result)){
             $message = [
                 'code' => EXIT_BE_ERROR,
@@ -103,7 +108,7 @@ class StudentController extends BE_Controller{
         $message = [
             'code' => EXIT_BE_ERROR,
             'message' => 'An error occured while processing your request.'
-        ];
+        ]; 
 
         if($result){
             $message = [
