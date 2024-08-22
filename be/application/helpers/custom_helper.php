@@ -99,6 +99,10 @@ if( ! function_exists('error_code') ) {
                 $message = 'An error occurred while processing your request';
             }
 
+           if($code === EXIT_FORM_NULL && empty($message)){
+            $message = 'All field is required';
+           }
+
             //Automatically set message for EXIT_SUCCESS
             if($code === EXIT_SUCCESS && empty($message)){
                 $message = 'OK';
@@ -123,6 +127,31 @@ if( ! function_exists('error_code') ) {
            
     
             return $msg;
+        }
+    }
+
+    if (!function_exists('formValidator')) {
+
+        function formValidator($req_data, $required_fields)
+        {
+            // Initialize an empty array to store missing fields
+            $missing_fields = [];
+    
+            // Check if each required field is present in the request data
+            foreach ($required_fields as $field) {
+                if (empty($req_data[$field])) {
+                    $missing_fields[] = $field; // Add to missing fields if not present
+                }
+            }
+    
+            // If there are missing fields, return an error message
+            if (!empty($missing_fields)) {
+                #$missing_fields_str = implode(', ', $missing_fields); // Convert array to string
+                return message(EXIT_FORM_NULL,0,$missing_fields);
+            }
+    
+            // If all required fields are present, return a success message
+            return message(EXIT_SUCCESS, 'All required fields are present.');
         }
     }
     

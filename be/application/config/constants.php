@@ -75,6 +75,7 @@ defined('FOPEN_READ_WRITE_CREATE_STRICT')       OR define('FOPEN_READ_WRITE_CREA
 */
 defined('EXIT_SUCCESS')        OR define('EXIT_SUCCESS', 0); // no errors
 defined('EXIT_ERROR')          OR define('EXIT_ERROR', 1); // generic error
+defined('EXIT_FORM_NULL')       OR define('EXIT_FORM_NULL',2);// request data from FE some fields is null
 defined('EXIT_BE_ERROR')       OR define('EXIT_BE_ERROR', 9); // generic error
 defined('EXIT_CONFIG')         OR define('EXIT_CONFIG', 3); // configuration error
 defined('EXIT_UNKNOWN_FILE')   OR define('EXIT_UNKNOWN_FILE', 4); // file not found

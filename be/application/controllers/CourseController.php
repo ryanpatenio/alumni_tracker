@@ -11,67 +11,89 @@ class CourseController extends BE_Controller{
         $query = "SELECT * FROM courses WHERE status = 'A'";
         $result = $this->Common_model->regular_query($query);
 
-        if( ! $result){
+        $message = [
+            'code' => EXIT_BE_ERROR,
+            'message' => 'No Record(s) to Display.',
+            'data' => $result #return empty array
+        ];
+
+        if( ! empty($result)){
             $message = [
-                'code' => EXIT_BE_ERROR,
-                'message' => 'an error occured while processing your request.'
+                'code' => EXIT_SUCCESS,
+                'message' => 'OK',
+                'data' => $result
             ];
         }
 
-        $message = [
-            'code' => EXIT_SUCCESS,
-            'message' => 'OK',
-            'data' => $result
-        ];
+       
 
         $this->be_exception->show_result($message);
     }
 
     public function store(){
         $receiveData = $this->message;
+
+        $required_fields = ['course_name'];
+
+        $validation_result = formValidator($receiveData,$required_fields);
+
+        if($validation_result['code'] === EXIT_FORM_NULL){
+            $msg = $validation_result;
+            $this->be_exception->show_result($msg);
+            return;
+        }
         
         $course_name = $receiveData['course_name'];
-        $query = "INSERT INTO courses (course_name) VALUES(?)";
+        $query = "INSERT INTO courses (course_name,status) VALUES(?,'A')";
         $param = [$course_name];
         
-        $result = $this->Common_model->regular_query($query);
+        $result = $this->Common_model->regular_query($query,$param);
 
-        if( empty($result)){
+        $message = message(EXIT_BE_ERROR);
+
+        if( !empty($result)){
             $message = [
-                'code' => EXIT_BE_ERROR,
-                'message' => 'an error occured while processing your request.'
-            ];
+                'code' => EXIT_SUCCESS,
+                'message' => 'OK'
+            ];    
         }
-
-        $message = [
-            'code' => EXIT_SUCCESS,
-            'message' => 'OK'
-        ];
-
+       
         $this->be_exception->show_result($message);
     }
 
     public function get(){
-        $id = $this->message['filter'];
+        $receiveData = $this->message;
+
+        #field validation
+        $req_field = ['filter'];
+        $val_result = formValidator($receiveData,$req_field);
+
+        #if validation fails
+        if($val_result['code'] === EXIT_FORM_NULL){
+            $msg = $val_result;
+            $this->be_exception->show_result($msg);
+            return;
+        }
+
+        $id = $receiveData['filter'];
 
         $query = "SELECT * FROM courses WHERE course_id = ?";
         $param = [$id];
 
         $result = $this->Common_model->regular_query($query,$param);
+        $message = message(EXIT_BE_ERROR);
 
         if(empty($result)){
-            #empty
-            $message = [
-                'code' => EXIT_BE_ERROR,
-                'message' => 'No Data Found.'
-            ];
+            $message = message(EXIT_BE_ERROR,'No Data Found');
         }
 
-        $message = [
-            'code' => EXIT_SUCCESS,
-            'message' => 'OK',
-            'data' => $result
-        ];
+        if( ! empty($result)){
+            $message = [
+                'code' => EXIT_SUCCESS,
+                'message' => 'OK',
+                'data' => $result
+            ];
+        }      
 
         $this->be_exception->show_result($message);
 
@@ -81,51 +103,100 @@ class CourseController extends BE_Controller{
     public function update(){
         $receiveData = $this->message;
 
-        $course_name = $receiveData['course_name'];
-        $id  = $receiveData['course_id'];
+        $req_fields = ['course_name','course_id'];
+        $val_result = formValidator($receiveData,$req_fields);
 
-        $query = "UPDATE courses SET course_name = ? WHERE course_id = ?";
-        $params = [$course_name,$id];
-
-        $result = $this->Common_model->regular_query($query,$params);
-
-        if(! $result){
-            $message = [
-                'code' => EXIT_BE_ERROR,
-                'message' => 'an error occured while processing your request.'
-            ];
+        if($val_result['code'] === EXIT_FORM_NULL){
+            $msg = $val_result;
+            $this->be_exception->show_result($msg);
+            return;
         }
 
-        $message = [
-            'code' => EXIT_SUCCESS,
-            'message' => 'ok'
-        ];
+        #required DATA
+        $course_name = $receiveData['course_name'];
+        $id  = $receiveData['course_id'];
+        $currentDateTime = current_datetime();
+
+
+        #check if this course is exist in db
+        if($this->isExist($id) == 2){
+            #not exist
+            $msg = message(EXIT_BE_ERROR,'No Data Found');
+            $this->be_exception->show_result($msg);
+            return;
+        }
+
+        $query = "UPDATE courses SET course_name = ? , last_updated = ? WHERE course_id = ?";
+        $params = [$course_name,$id,$currentDateTime];
+
+        #execute Query
+        $result = $this->Common_model->regular_query($query,$params);
+
+        #if query fails return error message
+        $message = message(EXIT_BE_ERROR);
+
+        if($result){
+            $message = [
+                'code' => EXIT_SUCCESS,
+                'message' => 'ok'
+            ];
+        }
 
         $this->be_exception->show_result($message);
     }
 
 
     public function destroy(){
-        $id = $this->message['filter'];
+        $receiveData = $this->message;
+
+        $req_field  = ['filter'];
+        $val_result = formValidator($receiveData,$req_field);
+
+        if($val_result['code'] === EXIT_FORM_NULL){
+            $msg = $val_result;
+            $this->be_exception->show_result($msg);
+            return;
+        }
+
+        #request Data
+        $id = $receiveData['filter'];
+
+        if($this->isExist($id) == 2){
+            #not exist 
+            $msg = message(EXIT_BE_ERROR,'No Data Found!');
+            $this->be_exception->show_result($msg);
+            return;
+        }
         
         $query = "UPDATE courses SET status = 'U' WHERE course_id = ?";
         $param = [$id];
 
-        $result = $this->Common_model->show_result($query,$param);
+        #execute query
+        $result = $this->Common_model->regular_query($query,$param);
 
-        if(! $result){
-            #false
+        #if query fails
+        $message = message(EXIT_BE_ERROR);
+
+        if($result){          
             $message = [
-                'code' => EXIT_BE_ERROR,
-                'message' => 'an error occured while processing your request.'
+            'code' => EXIT_SUCCESS,
+            'message' => 'OK'
             ];
         }
 
-        $message = [
-            'code' => EXIT_SUCCESS,
-            'message' => 'OK'
-        ];
-
         $this->be_exception->show_result($message);
+    }
+
+    private function isExist($id){
+        $query = "SELECT * FROM courses WHERE course_id = ?";
+        $param = [$id];
+        $result = $this->Common_model->regular_query($query,$param);
+
+        if( ! empty($result)){
+            #true
+            return 1;
+        }else{
+            return 2;
+        }
     }
 }

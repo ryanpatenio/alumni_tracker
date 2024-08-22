@@ -103,7 +103,14 @@
                     <div class="col">
                         <label for="" class="form-label">PROFESSOR</label>
                         <select name="prof" id="prof" class="form-select">
-                          <option value="">Henry Lim</option>
+                          <?php
+                            foreach ($Professors as $professor) {
+                              ?>
+                            <option value="<?= $professor['prof_id']; ?>"><?=$professor['name']; ?></option>
+
+                            <?php
+                            }
+                          ?>
                         </select>
                     </div>
                   </div>
