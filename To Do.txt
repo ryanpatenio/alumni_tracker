@@ -1,0 +1,25 @@
+pm.request.headers.add({
+    key: 'Content-Type',
+    value: 'application/json'
+});
+
+
+!TO DO in BE!
+Expected Date to Comply (2-3DAYS)
+#advisory Records
+#BATCH
+#DASHBOARD REPORTS
+#USER (add,edit,update) with avatar
+@@ Analytics if the alumni DATA(employed,unemployed(counts,Graph[by batch]))
+
+
+
+Expected Date to comply(2-3Days)
+!TO DO in FE
+@ADD (student,professor,batch,SY,courses,advisoryRecords,sections,users,profile)
+@EDIT (student,professor,batch,SY,courses,advisoryRecords,sections,users,profile)
+@UPDATE (student,professor,batch,SY,courses,advisoryRecords,sections,users,profile)
+@DELETE (student,professor,batch,SY,courses,advisoryRecords,sections,users,profile)
+
+@@ FE of alumni FORM
+

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2024 at 10:21 PM
+-- Generation Time: Aug 24, 2024 at 07:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -53,7 +53,11 @@ INSERT INTO `access_token` (`id`, `token`, `user_id`, `ip_address`, `update_date
 (57, '19734215b047fe252e160d213e51a5dbff5f1580f2146f580172307e86d678c1', '1', '::1', '2024-07-24 05:38:59'),
 (58, '2bcd5ca726664f0637aca12387c7cf8917b48dc66737b12f1a0e2c30f99ceb6d', '1', '::1', '2024-08-13 21:39:55'),
 (59, 'd4153747a2ce7aa4fbcbe97c286c3c9396eb0243a3eb0840ed19b7f7b78d824d', '1', '::1', '2024-08-19 03:39:02'),
-(60, '57a5389a992a8dd4880f87f0c0da4c7c7ce37432023410a94cfbc543652a4d5e', '1', '::1', '2024-08-19 03:40:13');
+(60, '57a5389a992a8dd4880f87f0c0da4c7c7ce37432023410a94cfbc543652a4d5e', '1', '::1', '2024-08-19 03:40:13'),
+(61, '13758242f9f276b417abfede8cffa7d47c70e19b4342c2813e262fdc3b81247c', '1', '::1', '2024-08-19 19:27:15'),
+(62, '6d24b8e87362f1efa29c9a2da432ebd79cdad299e4b6fb44b2eed725a33fbf52', '1', '::1', '2024-08-21 02:06:44'),
+(63, 'd8627689345bb7e9b87cd41dde7681020d4b1fd2c627e94174b106ddfdd94d0e', '2', '::1', '2024-08-21 02:07:11'),
+(64, '6631291cb9c4aa3850181f06da1d5a168449765b48501b51bf81539277991afc', '2', '::1', '2024-08-22 20:50:49');
 
 -- --------------------------------------------------------
 
@@ -67,9 +71,9 @@ CREATE TABLE `advisor_records` (
   `sy_id` int(11) NOT NULL DEFAULT 0,
   `course_id` int(11) NOT NULL DEFAULT 0,
   `sect_id` int(11) NOT NULL DEFAULT 0,
-  `status` varchar(50) NOT NULL DEFAULT '0',
+  `status` varchar(50) NOT NULL DEFAULT 'A',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `last_updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -96,7 +100,8 @@ CREATE TABLE `batch` (
   `batch_name` varchar(100) NOT NULL DEFAULT '0',
   `adviser_id` int(11) NOT NULL DEFAULT 0,
   `student_id` int(11) NOT NULL DEFAULT 0,
-  `date_created` datetime NOT NULL DEFAULT current_timestamp()
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -132,8 +137,16 @@ CREATE TABLE `courses` (
   `course_name` varchar(100) NOT NULL DEFAULT '0',
   `status` varchar(50) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `last_updated` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `courses`
+--
+
+INSERT INTO `courses` (`course_id`, `course_name`, `status`, `date_created`, `last_updated`) VALUES
+(1, 'sample', 'U', '2024-08-23 03:21:36', '2024-08-23 03:45:32'),
+(2, 'sampls', 'U', '2024-08-23 03:22:07', '2024-08-23 03:22:07');
 
 -- --------------------------------------------------------
 
@@ -195,9 +208,18 @@ CREATE TABLE `professor` (
   `address` varchar(100) NOT NULL DEFAULT '0',
   `degree` varchar(100) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `last_updated` datetime DEFAULT NULL,
   `status` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `professor`
+--
+
+INSERT INTO `professor` (`prof_id`, `name`, `email`, `contact`, `address`, `degree`, `date_created`, `last_updated`, `status`) VALUES
+(17, 'Henry Cabell', 'henryCabel@gmail.com', '09484883888', 'Sipalay City, Negros Occidental', 'MIT', '2024-08-19 07:52:42', '2024-08-19 07:52:42', 'A'),
+(18, 'Mike Tan', 'miketan@gmail.com', '09388588388', 'sampleAddress', 'MIT', '2024-08-22 20:56:52', '2024-08-22 20:56:52', 'A'),
+(19, 'Henry MacArthur', 'henrymacarthur@gmail.com', '09998384883', 'Bacolod City', 'MIT', '2024-08-22 22:24:00', '2024-08-22 20:44:35', 'A');
 
 -- --------------------------------------------------------
 
@@ -207,19 +229,23 @@ CREATE TABLE `professor` (
 
 CREATE TABLE `sections` (
   `sect_id` int(11) NOT NULL,
-  `number` varchar(50) NOT NULL DEFAULT '0'
+  `number` varchar(50) NOT NULL DEFAULT '0',
+  `status` char(50) NOT NULL DEFAULT 'A',
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sections`
 --
 
-INSERT INTO `sections` (`sect_id`, `number`) VALUES
-(1, '1'),
-(2, '2'),
-(3, '3'),
-(4, '4'),
-(5, '5');
+INSERT INTO `sections` (`sect_id`, `number`, `status`, `date_created`, `last_updated`) VALUES
+(1, '1', 'A', '2024-08-24 23:43:43', '2024-08-24 23:43:43'),
+(2, '2', 'A', '2024-08-24 23:43:43', '2024-08-24 23:43:43'),
+(3, '3', 'A', '2024-08-24 23:43:43', '2024-08-24 23:43:43'),
+(4, '4', 'A', '2024-08-24 23:43:43', '2024-08-24 23:43:43'),
+(5, '5', 'A', '2024-08-24 23:43:43', '2024-08-24 23:43:43'),
+(6, '6', 'A', '2024-08-24 23:43:43', '2024-08-24 23:44:06');
 
 -- --------------------------------------------------------
 
@@ -233,16 +259,20 @@ CREATE TABLE `students` (
   `email` varchar(100) NOT NULL DEFAULT '0',
   `contact` varchar(100) NOT NULL DEFAULT '0',
   `batch_id` int(11) NOT NULL DEFAULT 0,
-  `student_status` varchar(50) NOT NULL DEFAULT '0'
+  `student_status` varchar(50) NOT NULL DEFAULT '0',
+  `date_created` datetime NOT NULL DEFAULT current_timestamp(),
+  `last_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`student_id`, `name`, `email`, `contact`, `batch_id`, `student_status`) VALUES
-(1, 'James Hunter', 'James_hunter@gmail.com', '0399493992', 1, 'A'),
-(2, 'Crazy Slot', 'Crazy@gmail.com', '0948838883', 1, 'A');
+INSERT INTO `students` (`student_id`, `name`, `email`, `contact`, `batch_id`, `student_status`, `date_created`, `last_updated`) VALUES
+(1, 'James Hunter', 'James_hunter@gmail.com', '0399493992', 1, 'A', '2024-08-23 04:43:55', NULL),
+(2, 'Crazy Slot', 'Crazy@gmail.com', '0948838883', 1, 'A', '2024-08-23 04:43:55', NULL),
+(3, 'tes1', 'testEmail@gmail.com', '09388388883', 1, 'A', '2024-08-23 04:43:55', NULL),
+(4, 'test 5', 'test5@gmail.com', '09388853444', 1, 'U', '2024-08-23 04:43:55', '2024-08-24 23:16:04');
 
 -- --------------------------------------------------------
 
@@ -255,8 +285,15 @@ CREATE TABLE `sy` (
   `sy_name` varchar(50) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `status` varchar(50) NOT NULL
+  `status` varchar(50) NOT NULL DEFAULT 'A'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `sy`
+--
+
+INSERT INTO `sy` (`sy_id`, `sy_name`, `date_created`, `last_updated`, `status`) VALUES
+(1, '2022-2023', '2024-08-24 23:47:06', '2024-08-24 23:47:06', 'A');
 
 -- --------------------------------------------------------
 
@@ -269,19 +306,22 @@ CREATE TABLE `users` (
   `name` varchar(100) NOT NULL DEFAULT '0',
   `email` varchar(100) NOT NULL DEFAULT '0',
   `password` varchar(255) NOT NULL DEFAULT '0',
-  `status` varchar(50) NOT NULL DEFAULT '0',
+  `status` varchar(50) NOT NULL DEFAULT 'A',
   `type` varchar(50) NOT NULL DEFAULT '0',
+  `avatar` varchar(100) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_login_date` datetime NOT NULL DEFAULT current_timestamp(),
-  `last_logout_date` datetime NOT NULL DEFAULT current_timestamp()
+  `last_login_date` datetime DEFAULT NULL,
+  `last_logout_date` datetime DEFAULT NULL,
+  `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `status`, `type`, `date_created`, `last_login_date`, `last_logout_date`) VALUES
-(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$iCH3cS5XxaeUDQb9Q6uXBuccQdCP8/Oc.wGwDFSFdqPz26U76/1de', 'A', '1', '2024-07-20 16:49:26', '2024-08-19 03:40:13', '2024-08-19 03:39:57');
+INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `status`, `type`, `avatar`, `date_created`, `last_login_date`, `last_logout_date`, `last_updated`) VALUES
+(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$JUbVctsIHEaSV.zYc6LsPuxRGvjnt25PgKB.o9un8WnuZL4oduvOe', 'A', '1', 'asdadasd', '2024-07-20 16:49:26', '2024-08-21 02:06:44', '2024-08-21 02:06:49', '0000-00-00 00:00:00'),
+(2, 'James Henry', 'james@gmail.com', '$2y$10$DNSiohSIu02kNGm97LlEJ.vhgrdQsscfga9ksA4DEhpIJayrANouq', 'A', '1', 'qwer', '2024-08-20 23:57:42', '2024-08-22 20:50:49', '2024-08-20 23:57:43', '2024-08-25 01:34:59');
 
 -- --------------------------------------------------------
 
@@ -452,7 +492,7 @@ ALTER TABLE `user_logs`
 -- AUTO_INCREMENT for table `access_token`
 --
 ALTER TABLE `access_token`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=61;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=65;
 
 --
 -- AUTO_INCREMENT for table `advisor_records`
@@ -476,7 +516,7 @@ ALTER TABLE `capabilities`
 -- AUTO_INCREMENT for table `courses`
 --
 ALTER TABLE `courses`
-  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `course_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `error_codes`
@@ -494,31 +534,31 @@ ALTER TABLE `number`
 -- AUTO_INCREMENT for table `professor`
 --
 ALTER TABLE `professor`
-  MODIFY `prof_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `prof_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `sections`
 --
 ALTER TABLE `sections`
-  MODIFY `sect_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `sect_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `sy`
 --
 ALTER TABLE `sy`
-  MODIFY `sy_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sy_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `user_activity_logs`

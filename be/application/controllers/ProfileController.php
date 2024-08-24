@@ -45,6 +45,19 @@ class ProfileController extends BE_Controller{
     }
 
     public function changePass(){
+
+        $receivedData = $this->message;
+
+        #validate received Data
+        $req_fields = ['user_id','oldPassword','newPassword'];
+        $val_res = formValidator($receivedData,$req_fields);
+
+        if($val_res['code'] === EXIT_FORM_NULL){
+            $this->be_exception->show_result($val_res);
+            return;
+        }
+
+        #sanitize Data
         $user_id = $this->message['user_id'];
 
         $oldPassword = $this->message['oldPassword']; 
@@ -54,47 +67,38 @@ class ProfileController extends BE_Controller{
 
         #get USER latest password
         $user_pass = $this->getUserPassword($user_id);
-        
-        $message = [
-            'code' => EXIT_BE_ERROR,
-            'message' => 'an error occured while processing your request.'
-        ];
+
+        #if this method fails @getUserPassword($user_id)
+        $message = message(EXIT_BE_ERROR);
        
         if( empty($user_pass)){
             #user not found
-            $message = [
-                'code' => EXIT_BE_ERROR,
-                'message' => 'User Not Found.'
-            ];
+            $this->be_exception->show_result(message(EXIT_BE_ERROR,'user not found!'));
+            return;
 
-        }else{
-            #User Found
-            if( password_verify($oldPassword,$user_pass->password)){
-                #Old Password Match!
-    
-                $query = "UPDATE users SET password = ? WHERE user_id = ?";
-                $param = [$hash_password,$user_id];
-    
-                $result = $this->Common_model->regular_query($query,$param);
-                    $message = [
-                        'code' => EXIT_BE_ERROR,
-                        'message' => 'an error occured while processing your request.'
-                    ];
-               
-                    if($result){
-                        $message = [
-                            'code' => EXIT_SUCCESS,
-                            'message' => 'OK'
-                        ];
-                    }
-    
-            }else{
+        }        
+           
+            if( ! password_verify($oldPassword,$user_pass->password)){
+                #Old Password Not Match!
+                $this->be_exception->show_result(message(EXIT_BE_ERROR,'old Password Not Match!'));
+                return;
+            }
+
+            $query = "UPDATE users SET password = ? WHERE user_id = ?";
+            $param = [$hash_password,$user_id];
+
+            $result = $this->Common_model->regular_query($query,$param);
+
+            #if query fails
+            $message = message(EXIT_BE_ERROR);
+           
+            if($result){
                 $message = [
-                    'code' => EXIT_BE_ERROR,
-                    'message' => 'Old Password Not Match'
+                    'code' => EXIT_SUCCESS,
+                    'message' => 'OK'
                 ];
             }
-        }
+    
 
         $this->be_exception->show_result($message);
     }
