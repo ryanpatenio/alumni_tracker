@@ -9,7 +9,6 @@ Expected Date to Comply (2-3DAYS)
 #advisory Records
 #BATCH
 #DASHBOARD REPORTS
-#USER (add,edit,update) with avatar
 @@ Analytics if the alumni DATA(employed,unemployed(counts,Graph[by batch]))
 
 
