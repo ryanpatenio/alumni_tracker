@@ -147,7 +147,8 @@ if( ! function_exists('error_code') ) {
             // If there are missing fields, return an error message
             if (!empty($missing_fields)) {
                 #$missing_fields_str = implode(', ', $missing_fields); // Convert array to string
-                return message(EXIT_FORM_NULL,0,$missing_fields);
+               # return message(EXIT_FORM_NULL,'All',$missing_fields);
+               return message(EXIT_FORM_NULL);
             }
     
             // If all required fields are present, return a success message

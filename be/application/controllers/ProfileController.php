@@ -11,7 +11,7 @@ class ProfileController extends BE_Controller{
     public function getMyInfo(){
         $user_id = $this->message['filter'];
 
-        $query = "SELECT user_id, name , email , case type WHEN 1 THEN 'ADMIN' WHEN 2 THEN 'SUB-ADMIN' END as 'role' FROM users WHERE user_id = ?";
+        $query = "SELECT user_id, name , email , avatar , case type WHEN 1 THEN 'ADMIN' WHEN 2 THEN 'SUB-ADMIN' END as 'role' FROM users WHERE user_id = ?";
         $param = [$user_id];
         
         $result = $this->Common_model->regular_query($query,$param);
@@ -37,11 +37,96 @@ class ProfileController extends BE_Controller{
     public function changeNameAndAvatar(){
         $receivedData = $this->message;
 
+        #validate received Data
+        $req_fields = ['user_id','newName'];
+        $val_res = formValidator($receivedData,$req_fields);
+
+        if($val_res['code'] === EXIT_FORM_NULL){
+            $this->be_exception->show_result(message(EXIT_BE_ERROR,'All Field is required'));
+            return;
+        }
+
         $user_id = $receivedData['user_id'];
         $newName = $receivedData['newName'];
 
-        $query = "UPDATE users SET name = ? WHERE user_id = ?";
-        #change this if u finished the add new user
+        #set FORM DATA
+        $data_toUpdate = [
+            'name' => $newName
+        ];
+
+        if ( ! empty($_FILES['e_avatar']['name']) && file_exists('./uploads/avatar/' . $receivedData['cur_avatar'])){
+
+            # Define max size in bytes (5MB = 5120KB)
+            $max_size = 5120 * 1024; // 5MB in bytes
+
+            # Get the file size from the $_FILES array
+            $file_size = $_FILES['e_avatar']['size'];
+            # Check if the file size exceeds the limit
+
+            if ($file_size > $max_size) {
+                // File size is too large
+                $this->be_exception->show_result(message(EXIT_BE_ERROR, 'The file size exceeds the 5MB limit.'));
+                return;
+            }
+                 
+             # Set up all configuration
+             $config['upload_path'] = './uploads/avatar/';
+             $config['allowed_types'] = 'gif|jpg|jpeg|png';
+             $config['max_size'] = 5120; // 5MB in KB
+             $config['file_name'] = 'avatar_' . date('YmdHis');
+ 
+             $this->upload->initialize($config);
+ 
+             if (!$this->upload->do_upload('e_avatar')) {
+                 # Error in uploading
+                 $error = $this->upload->display_errors();
+                 $this->be_exception->show_result(message(EXIT_BE_ERROR,'an error occured while uploading file.'));
+                 return;              
+             }
+ 
+
+              # GET THE UPLOAD DATA
+              $data = $this->upload->data();
+              $file_name = $data['file_name'];
+ 
+              unlink('./uploads/avatar/' . $receivedData['cur_avatar']); #delete the old avatar
+ 
+             #APPEND FORM DATA
+             $data_toUpdate['avatar'] = $file_name;
+        }
+
+
+            # Dynamically build the query
+            $query = "UPDATE users SET ";
+            $setPart = [];
+            $params = [];
+
+            # Add fields to update
+            foreach ($data_toUpdate as $column => $value) {
+                $setPart[] = "{$column} = ?";
+                $params[] = $value;
+            }
+
+            # Add user_id to the condition
+            $query .= implode(', ', $setPart) . " WHERE user_id = ?";
+            $params[] = $user_id;
+
+            
+            # Execute the query
+            $result = $this->Common_model->regular_query($query, $params);
+
+            #query fails
+            $message = message(EXIT_BE_ERROR);
+
+            if($result){
+            
+                $message = [
+                    'code' => EXIT_SUCCESS,
+                    'message' => 'OK'
+                ];
+            }
+
+        $this->be_exception->show_result($message);
     }
 
     public function changePass(){

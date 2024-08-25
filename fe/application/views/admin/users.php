@@ -98,6 +98,14 @@
 
                   <div class="row mb-2" id="">
                     <div class="col">
+                      <label for="" class="form-label" id="for-password">Avatar</label>
+                      <input type="file" class="form-control" id="_avatar" required >
+                    </div>
+                      
+                  </div>
+
+                  <div class="row mb-2" id="">
+                    <div class="col">
                       <label for="" class="form-label" id="for-admin-type">Type</label>
                       <select name="" id="admin-type" class="form-select">
                         <option value="1">Admin</option>
@@ -133,16 +141,51 @@
                 <input type="hidden" id="product-id" name="product_id">
                 <div class="card-body">
 
-                  <div class="row mb-2">
-                    <div class="col">
-                      <label for="validationDefault01" class="form-label">Product Name</label>                  
-                      <input type="text" class="form-control" name="product_name" id="product-name"  required>  
+                    <div class="row mb-2">
+                      <div class="col">
+                        <label for="validationDefault01" class="form-label">Name</label>                  
+                        <input type="text" class="form-control" name="user_name" id=""  required placeholder="Name">  
+                      </div>
+                      
                     </div>
-                  </div>
-                  
-                  
-                </div>                       
-              
+
+                    <div class="row mb-2" id="">
+                      <div class="col">
+                        <label for="" class="form-label" id="for-email">Email</label>
+                        <input type="text" class="form-control" id="email" required placeholder="Email">
+                      </div>
+                        
+                    </div>
+
+                    <div class="row mb-2" id="">
+                      <div class="col">
+                        <label for="" class="form-label" id="for-password">Password</label>
+                        <input type="password" class="form-control" id="password" required placeholder="Password">
+                      </div>
+                        
+                    </div>
+
+                    <div class="row mb-2" id="">
+                      <input type="hidden" id="cur_avatar" name="cur_avatar">
+                      <div class="col">
+                        <label for="" class="form-label" id="for-password">Avatar</label>
+                        <input type="file" class="form-control" id="e_avatar" required >
+                      </div>
+                        
+                    </div>
+
+                    <div class="row mb-2" id="">
+                      <div class="col">
+                        <label for="" class="form-label" id="for-admin-type">Type</label>
+                        <select name="" id="admin-type" class="form-select">
+                          <option value="1">Admin</option>
+                          <option value="2">Sub-Admin</option>
+                        </select>
+                      </div>
+                        
+                    </div>
+
+                </div>  
             </div>
             <div class="modal-footer">
               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
