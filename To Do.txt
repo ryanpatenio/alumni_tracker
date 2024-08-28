@@ -6,8 +6,6 @@ pm.request.headers.add({
 
 !TO DO in BE!
 Expected Date to Comply (2-3DAYS)
-#advisory Records
-#BATCH
 #DASHBOARD REPORTS
 @@ Analytics if the alumni DATA(employed,unemployed(counts,Graph[by batch]))
 
@@ -21,4 +19,12 @@ Expected Date to comply(2-3Days)
 @DELETE (student,professor,batch,SY,courses,advisoryRecords,sections,users,profile)
 
 @@ FE of alumni FORM
+
+
+@git command for tracking specific files or folder
+git update-index --assume-unchanged config/database.php
+
+@undo changes
+git update-index --no-assume-unchanged config/database.php
+
 
