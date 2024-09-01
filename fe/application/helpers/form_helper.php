@@ -47,7 +47,10 @@ if( ! function_exists('json_response')){
             $CI->output
             ->set_content_type('application/json')
             ->set_status_header($statusCode)
-            ->set_output(json_encode(['message' => $message]));
+            ->set_output(json_encode([
+                'message' => $message
+               
+            ]));
 
         }
 

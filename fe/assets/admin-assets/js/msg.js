@@ -162,3 +162,22 @@ function loader(_status){
       console.log(_logs);
     }
 }
+
+function swalMessage(swal_type, message, willConfirmedCallback) {
+    let defaultMessages = {
+        'update': "Are you sure you want to update this item?",
+        'delete': "Are you sure you want to delete this item?",
+        'custom': message || "Are you sure you want to proceed?",
+    };
+
+    swal({
+        text: defaultMessages[swal_type] || defaultMessages['custom'],
+        icon: "info",
+        buttons: true,
+        dangerMode: swal_type === 'delete',
+    }).then((willconfirmed) => {
+        if (willconfirmed && typeof willConfirmedCallback === 'function') {
+            willConfirmedCallback();
+        }
+    });
+}

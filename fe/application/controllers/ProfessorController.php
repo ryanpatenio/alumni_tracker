@@ -76,7 +76,7 @@ class ProfessorController extends CI_Controller{
     }
 
     public function getProfessor(){
-        $id = 2;
+        $id = $this->input->post('ID');
 
         if($id == null || $id == ""){
             json_response('ID not Found!',400);
@@ -138,5 +138,31 @@ class ProfessorController extends CI_Controller{
 
             json_response($api_req,200);
         }
+    }
+
+    public function delete(){
+        $id = $this->input->post('id');
+
+        if($id === null || $id === ""){
+            $err = [
+                'code' => 2,
+                'message' => 'required Data not Found!',
+                
+            ];
+            json_response($err,200);
+            return;
+        }
+
+        $req_data = [
+            'message' => [
+                'filter' => $id
+            ]
+            
+        ];
+
+        $api_url = api_url('professorController/destroy');
+        $api_req = send_request($req_data,$api_url);
+
+        json_response($api_req,200);
     }
 }

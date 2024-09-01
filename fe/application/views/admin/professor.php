@@ -49,6 +49,7 @@
                   <td><?=$professor['name']; ?></td>
                   <td>
                      <button type="button" id="edit_btn" data-id="<?= $professor['prof_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+                     <button type="button" id="delete_btn" data-id="<?= $professor['prof_id'];?>" class="btn btn-danger bi bi-trash"> Delete</button>
                   </td>
                 </tr> 
 
@@ -100,7 +101,7 @@
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Contact</label>                  
-                      <input type="text" class="form-control" name="contact" id=""  required>  
+                      <input type="text" class="form-control" name="contact" id=""  required maxlength="11">  
                     </div>
                     <div class="col">
                         <label for="" class="form-label">Address</label>
@@ -132,7 +133,7 @@
       </div><!-- End ADD Modal-->
 
       <div class="modal fade" id="editModal" tabindex="-1">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Edit Product</h5>
@@ -145,13 +146,36 @@
                 <input type="hidden" id="id" name="id">
                 <div class="card-body">
 
-                  <div class="row mb-2">
+                <div class="row mb-2">
                     <div class="col">
-                      <label for="validationDefault01" class="form-label">Product Name</label>                  
-                      <input type="text" class="form-control" name="product_name" id="product-name"  required>  
+                      <label for="validationDefault01" class="form-label">Professor Name</label>                  
+                      <input type="text" class="form-control" name="prof_name" id="prof_name" required>  
+                    </div>
+                    <div class="col">
+                        <label for="" class="form-label">Email</label>
+                        <input type="email" class="form-control" name="email" id="email" required>
                     </div>
                   </div>
+
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="validationDefault01" class="form-label">Contact</label>                  
+                      <input type="text" class="form-control" name="contact" id="contact"  required maxlength="11">  
+                    </div>
+                    <div class="col">
+                        <label for="" class="form-label">Address</label>
+                        <input type="text" class="form-control" name="address" id="address" required>
+                    </div>
+                  </div>
+
                   
+                  <div class="row mb-2">
+                    <div class="col">
+                      <label for="validationDefault01" class="form-label">Degree</label>                  
+                      <input type="text" class="form-control" name="degree" id="degree" required>  
+                    </div>
+                   
+                  </div>
                   
                 </div>                       
               
