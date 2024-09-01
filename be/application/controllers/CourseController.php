@@ -127,7 +127,7 @@ class CourseController extends BE_Controller{
         }
 
         $query = "UPDATE courses SET course_name = ? , last_updated = ? WHERE course_id = ?";
-        $params = [$course_name,$id,$currentDateTime];
+        $params = [$course_name,$currentDateTime,$id];
 
         #execute Query
         $result = $this->Common_model->regular_query($query,$params);

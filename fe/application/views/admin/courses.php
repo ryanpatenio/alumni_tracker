@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
         </div>
 
           <div class="card-body">
@@ -37,10 +37,24 @@
                 </thead>
                 
                 <tbody>
+                  <?php
+                  $i = 1;
+
+                  foreach ($courses as $course) { ?>
+                  <tr>
+                    <td><?=$i; ?></td>
+                    <td><?=$course['course_name']; ?></td>
+                    <td>
+                        <button type="button" id="edit_btn" data-id="<?= $course['course_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+                        <button type="button" id="delete_btn" data-id="<?= $course['course_id'];?>" class="btn btn-danger bi bi-trash"> Delete</button>
+                      </td>
+                  </tr>
+
+
+                <?php $i++;  }
+                  
+                  ?>
              
-       
-            
-               
 
                 </tbody>
               </table>
@@ -59,7 +73,7 @@
 <!--------------All Modal-------------------->
   
 
-    <div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal fade" id="addModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -101,20 +115,20 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Edit Product</h5>
+              <h5 class="modal-title">Update Course</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form method="POST" id="updateForm" >
 
                 <!-- hidden product ID --> 
-                <input type="hidden" id="product-id" name="product_id">
+                <input type="hidden" id="id" name="id">
                 <div class="card-body">
 
                   <div class="row mb-2">
                     <div class="col">
-                      <label for="validationDefault01" class="form-label">Product Name</label>                  
-                      <input type="text" class="form-control" name="product_name" id="product-name"  required>  
+                      <label for="validationDefault01" class="form-label">Course Name</label>                  
+                      <input type="text" class="form-control" name="course_name" id="course-name"  required>  
                     </div>
                   </div>
                   
@@ -134,5 +148,5 @@
 <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
- <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/Product.js"></script>
+ <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/course.js"></script>
   
