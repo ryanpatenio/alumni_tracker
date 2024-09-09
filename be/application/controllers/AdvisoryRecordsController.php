@@ -8,7 +8,7 @@ class AdvisoryRecordsController extends BE_Controller{
     }
 
     public function getAll(){
-        $query = "select ad.advisor_id,prof.name as prof_name,s.sy_name as 'sy',crs.course_name as course,sect.number as section from advisor_records ad,professor prof,sy s,courses crs, sections sect where ad.prof_id = prof.prof_id and ad.sy_id = s.sy_id and ad.course_id = crs.course_id and ad.sect_id = sect.sect_id";
+        $query = "select bc.batch_name,ad.advisor_id,prof.name as prof_name,s.sy_name as 'sy',crs.course_name as course,sect.number as section from advisor_records ad,professor prof,sy s,courses crs, sections sect,batch bc where ad.prof_id = prof.prof_id and ad.sy_id = s.sy_id and ad.course_id = crs.course_id and ad.sect_id = sect.sect_id and ad.batch_id = bc.batch_id and ad.status != 'U' order by ad.advisor_id DESC";
         
         $result = $this->Common_model->regular_query($query);
 
@@ -34,7 +34,7 @@ class AdvisoryRecordsController extends BE_Controller{
         $receiveData = $this->message;
 
         #validations 
-        $req_fields = ['prof_id','sy_id','course_id','sect_id'];
+        $req_fields = ['batch_id','prof_id','sy_id','course_id','sect_id'];
         $val_res = formValidator($receiveData,$req_fields);
 
         if($val_res['code'] === EXIT_FORM_NULL){
@@ -42,14 +42,27 @@ class AdvisoryRecordsController extends BE_Controller{
             return;
         }
 
-
+        $batch_id = $receiveData['batch_id'];
         $prof_id = $receiveData['prof_id'];
         $sy_id = $receiveData['sy_id'];
         $course_id = $receiveData['course_id'];
         $section_id = $receiveData['sect_id'];
 
-        $query  = "INSERT INTO advisor_records (prof_id,sy_id,course_id,sect_id) VALUES(?,?,?,?)";
-        $params = [$prof_id,$sy_id,$course_id,$section_id];
+         #check if the records is already exist without professor checking
+         if($this->isRecordsExistWithoutProf($batch_id,$sy_id,$course_id,$section_id) == 1){
+            $this->be_exception->show_result(message(EXIT_BE_ERROR,'Records is already Exist OR this Records contains same Section or Batch and also Course! Make sure to Encode Correctly to Avoid redunduncy!'));
+            return;
+        }
+
+        #check if the records is already exist
+        if($this->isRecordsExistWithProf($batch_id,$prof_id,$sy_id,$course_id,$section_id) == 1){
+            $this->be_exception->show_result(message(EXIT_BE_ERROR,'Records is already Exist!'));
+            return;
+        }
+        
+
+        $query  = "INSERT INTO advisor_records (batch_id,prof_id,sy_id,course_id,sect_id) VALUES(?,?,?,?,?)";
+        $params = [$batch_id,$prof_id,$sy_id,$course_id,$section_id];
 
         $result = $this->Common_model->regular_query($query,$params);
 
@@ -80,7 +93,7 @@ class AdvisoryRecordsController extends BE_Controller{
 
         $id = $receiveData['filter'];
         
-        $query = "select ad.advisor_id,prof.name as prof_name,s.sy_name as 'sy',crs.course_name as course,sect.number as section from advisor_records ad,professor prof,sy s,courses crs, sections sect where ad.prof_id = prof.prof_id and ad.sy_id = s.sy_id and ad.course_id = crs.course_id and ad.sect_id = sect.sect_id and ad.advisor_id = ?";
+        $query = "select bc.batch_id,bc.batch_name,ad.advisor_id,prof.prof_id,prof.name as prof_name,s.sy_id,s.sy_name as 'sy',crs.course_id,crs.course_name as course,sect.sect_id,sect.number as section from advisor_records ad,professor prof,sy s,courses crs, sections sect, batch bc where ad.prof_id = prof.prof_id and ad.sy_id = s.sy_id and ad.course_id = crs.course_id and ad.sect_id = sect.sect_id and ad.batch_id = bc.batch_id and ad.advisor_id = ?";
         $param = [$id];
 
         $result = $this->Common_model->regular_query($query,$param);
@@ -104,14 +117,14 @@ class AdvisoryRecordsController extends BE_Controller{
         $receiveData = $this->message;
 
         #validations 
-        $req_fields = ['prof_id','sy_id','sect_id','course_id','advisor_id'];
+        $req_fields = ['batch_id','prof_id','sy_id','sect_id','course_id','advisor_id'];
         $val_res = formValidator($receiveData,$req_fields);
 
         if($val_res['code'] === EXIT_FORM_NULL){
             $this->be_exception->show_result($val_res);
             return;
         }
-
+        $batch_id = $receiveData['batch_id'];
         $prof_id = $receiveData['prof_id'];
         $sy_id = $receiveData['sy_id'];
         $course_id = $receiveData['course_id'];
@@ -126,8 +139,16 @@ class AdvisoryRecordsController extends BE_Controller{
             return;
         }
 
-        $query = "UPDATE advisor_records SET prof_id = ? , sy_id = ? , course_id = ? , sect_id = ? , last_updated = ? WHERE advisor_id = ?";
-        $params = [$prof_id,$sy_id,$course_id,$section_id,$update_date,$id];
+        #check if this records is already exist in the database
+        if($this->isRecordsExist($id,$batch_id,$sy_id,$course_id,$section_id) == 1){
+            #already exist
+            $this->be_exception->show_result(message(EXIT_BE_ERROR,'Records is already Exist OR this Records contains same Section or Batch and also Course! Make sure to Encode Correctly to Avoid redunduncy!'));
+            return;
+            
+        }
+
+        $query = "UPDATE advisor_records SET batch_id = ? ,prof_id = ? , sy_id = ? , course_id = ? , sect_id = ? , last_updated = ? WHERE advisor_id = ?";
+        $params = [$batch_id,$prof_id,$sy_id,$course_id,$section_id,$update_date,$id];
 
         $result = $this->Common_model->regular_query($query,$params);
 
@@ -198,5 +219,48 @@ class AdvisoryRecordsController extends BE_Controller{
             return 2;
         }
 
+    }
+
+    //without professor checking
+    private function isRecordsExistWithoutProf($batch_id,$sy_id,$course_id,$sect_id){
+        $query = "SELECT * FROM advisor_records WHERE batch_id = ? and sy_id = ? and course_id = ? and sect_id = ? and status != 'U'";
+        $param = [$batch_id,$sy_id,$course_id,$sect_id];
+        $result = $this->Common_model->regular_query($query,$param);
+
+        if( ! empty($result)){
+            #true
+            return 1;
+        }else{
+            #false
+            return 2;
+        }
+    }
+    //with professor checking
+    private function isRecordsExistWithProf($batch_id,$prof_id,$sy_id,$course_id,$sect_id){
+        $query = "SELECT * FROM advisor_records WHERE batch_id = ? and prof_id = ? and sy_id = ? and course_id = ? and sect_id = ? and status != 'U'";
+        $param = [$batch_id,$prof_id,$sy_id,$course_id,$sect_id];
+        $result = $this->Common_model->regular_query($query,$param);
+
+        if( ! empty($result)){
+            #true
+            return 1;
+        }else{
+            #false
+            return 2;
+        }
+    }
+
+    private function isRecordsExist($advisor_id,$batch_id,$sy_id,$course_id,$sect_id){
+        $query = "SELECT * FROM advisor_records WHERE batch_id = ? and sy_id = ? and course_id = ? and sect_id = ? and status != 'U' and advisor_id != ?";
+        $param = [$batch_id,$sy_id,$course_id,$sect_id,$advisor_id];
+        $result = $this->Common_model->regular_query($query,$param);
+
+        if( ! empty($result)){
+            #true
+            return 1;
+        }else{
+            #false
+            return 2;
+        }
     }
 }

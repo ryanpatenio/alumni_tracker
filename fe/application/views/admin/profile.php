@@ -154,21 +154,21 @@
                     <div class="row mb-3">
                       <label for="current_Password" class="col-md-4 col-lg-3 col-form-label">Current Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  type="password" name="currentPassword" class="form-control" id="currentPassword">
+                        <input  type="password" name="currentPassword" class="form-control" id="currentPassword" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="newPassword" class="col-md-4 col-lg-3 col-form-label">New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  type="password" name="newPassword" class="form-control" id="newPassword">
+                        <input  type="password" name="newPassword" class="form-control" id="new-password" required>
                       </div>
                     </div>
 
                     <div class="row mb-3">
                       <label for="renewPassword" class="col-md-4 col-lg-3 col-form-label">Re-enter New Password</label>
                       <div class="col-md-8 col-lg-9">
-                        <input  type="password" name="re_password" class="form-control" id="re-password">
+                        <input  type="password" name="re_password" class="form-control" id="re-password" required>
                       </div>
                     </div>
                     <span id="error_message"></span>
@@ -191,4 +191,4 @@
 
   </main><!-- End #main -->
   
-  <script type="text/javascript" src="<?= base_url();?>assets/js/admin-ajax/profile.js"></script>
+  <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/profile.js"></script>

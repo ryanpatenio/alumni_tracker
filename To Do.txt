@@ -7,7 +7,7 @@ pm.request.headers.add({
 !TO DO in BE!
 Expected Date to Comply (2-3DAYS)
 #DASHBOARD REPORTS
-@@ Analytics if the alumni DATA(employed,unemployed(counts,Graph[by batch]))
+@@ Analytics if the alumni DATA(employed,unemployed(counts,Graph[by School Year All Courses in One SY]))
 
 
 

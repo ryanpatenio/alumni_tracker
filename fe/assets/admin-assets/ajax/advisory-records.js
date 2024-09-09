@@ -3,40 +3,36 @@ $(document).ready(function(){
     const addModal = $('#addModal');
     const editModal = $('#editModal');
 
-
-    $(document).on('submit','#addForm',function(e){
+    $('#addForm').submit(function(e){
         e.preventDefault();
 
-
-        $url = baseUrl + "courseController/store";
-
+        $url = baseUrl + "AdvisoryRecordsController/store";
         let Data = $(this).serialize();
-        
+
         AjaxPost(
             $url,
             'POST',
             Data,
+
             function(){
                 logs(true);
             },
 
             function(response){
-                //res(response);
-
+                res(response);
                 if(response['message'].code != 0){
                     msg(response['message'].message,'error');
                     return;
                 }
 
-                message('New Course added successfully!','success');
+                message('New Records added successfully!','success');
                 formModalClose(addModal,$('#addForm'));
             },
 
             function(){
                 logs(false);
             }
-        );
-
+        )
 
     });
 
@@ -46,8 +42,7 @@ $(document).ready(function(){
         resetForm($('#updateForm'));
 
         let id = $(this).attr('data-id');
-
-        $url = baseUrl + "courseController/get";
+        $url = baseUrl + "AdvisoryRecordsController/get";
 
         AjaxPost(
             $url,
@@ -59,31 +54,48 @@ $(document).ready(function(){
             },
 
             function(response){
-                //success callback
+                //res(response);
                 if(response['message'].code != 0){
                     msg(response['message'].message,'error');
                     return;
                 }
 
+                $('#prof-id').val(response['message'].data[0].prof_id);
+                $('#prof-id').text(response['message'].data[0].prof_name);
+
+                $('#sy-id').val(response['message'].data[0].sy_id);
+                $('#sy-id').text(response['message'].data[0].sy);
+
+                $('#course-id').val(response['message'].data[0].course_id);
+                $('#course-id').text(response['message'].data[0].course);
+
+                $('#batch-id').val(response['message'].data[0].batch_id);
+                $('#batch-id').text(response['message'].data[0].batch_name);
+
+                $('#section-id').val(response['message'].data[0].sect_id);
+                $('#section-id').text(response['message'].data[0].section);
+
+                $('#advisory-id').val(response['message'].data[0].advisor_id);
+
                 editModal.modal('show');
-                $('#course-name').val(response['message'].data[0].course_name);
-                $('#id').val(response['message'].data[0].course_id);
+
             },
 
             function(){
                 logs(false);
             }
-        );
+        )
 
     });
 
-    $(document).on('submit','#updateForm',function(e){
+    $('#updateForm').submit(function(e){
         e.preventDefault();
 
-        $url = baseUrl + "courseController/update";
+        $url = baseUrl + "AdvisoryRecordsController/update";
         let Data = $(this).serialize();
 
-        swalMessage('custom','Are you Sure you want to update this Course?',function(){
+        swalMessage('custom','are you sure you want to update this Records?',function(){
+
             AjaxPost(
                 $url,
                 'POST',
@@ -94,14 +106,12 @@ $(document).ready(function(){
                 },
 
                 function(response){
-                    //success callback
-                    //res(response);
+                   
                     if(response['message'].code != 0){
                         msg(response['message'].message,'error');
                         return;
                     }
-
-                    message('Selected updated successfully!','success');
+                    message('Records Updated Successfully!','success');
                     formModalClose(editModal,$('#updateForm'));
                 },
 
@@ -112,16 +122,16 @@ $(document).ready(function(){
 
         });
 
-        
     });
 
     $(document).on('click','#delete_btn',function(e){
         e.preventDefault();
 
-        let id = $(this).attr('data-id');
-        $url = baseUrl + "courseController/delete";
+        let id  = $(this).attr('data-id');
+        $url = baseUrl + "AdvisoryRecordsController/delete";
 
-        swalMessage('custom','Are you sure you want to Delete this Course?',function(){
+
+        swalMessage('custom','Are you sure you want to Delete this Records?',function(){
             AjaxPost(
                 $url,
                 'POST',
@@ -132,14 +142,14 @@ $(document).ready(function(){
                 },
 
                 function(response){
-                    
+                  
                     if(response['message'].code != 0){
                         msg(response['message'].message,'error');
                         return;
                     }
 
-                    message('Selected Course removed successfully!','success');
-                    formModalClose(editModal,$('#updateForm'));
+                    message('Selected Records Deleted Successfully!','success');
+
                 },
 
                 function(){
@@ -148,7 +158,9 @@ $(document).ready(function(){
             )
 
         });
-    })
+
+       
+    });
 
 
 });

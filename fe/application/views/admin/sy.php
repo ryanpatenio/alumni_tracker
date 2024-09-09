@@ -21,7 +21,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
         </div>
 
           <div class="card-body">
@@ -37,11 +37,22 @@
                 </thead>
                 
                 <tbody>
-             
-       
-            
-               
-
+              <?php
+                $i = 1;
+                foreach ($schoolYear as $sy) { ?>
+                
+                  <tr>
+                    <td><?=$i; ?></td>
+                    <td><?=$sy['sy_name']; ?></td>
+                    <td>
+                      <button type="button" id="edit_btn" data-id="<?= $sy['sy_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+                        <button type="button" id="delete_btn" data-id="<?= $sy['sy_id'];?>" class="btn btn-danger bi bi-trash"> Delete</button>
+                    </td>
+                  </tr>
+                  
+              <?php $i++;  }
+              ?>
+              
                 </tbody>
               </table>
             </div>
@@ -59,7 +70,7 @@
 <!--------------All Modal-------------------->
   
 
-    <div class="modal fade" id="productModal" tabindex="-1">
+    <div class="modal fade" id="addModal" tabindex="-1">
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
@@ -74,7 +85,7 @@
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">SY Name</label>                  
-                      <input type="text" class="form-control" name="prof_name" id=""  required>  
+                      <input type="text" class="form-control" name="sy_name" id=""  required>  
                     </div>
                     
                   </div>
@@ -104,13 +115,13 @@
               <form method="POST" id="updateForm" >
 
                 <!-- hidden product ID --> 
-                <input type="hidden" id="product-id" name="product_id">
+                <input type="hidden" id="sy-id" name="id">
                 <div class="card-body">
 
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Product Name</label>                  
-                      <input type="text" class="form-control" name="product_name" id="product-name"  required>  
+                      <input type="text" class="form-control" name="sy_name" id="sy-name"  required>  
                     </div>
                   </div>
                   
@@ -130,5 +141,5 @@
 <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
- <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/Product.js"></script>
+ <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/sy.js"></script>
   

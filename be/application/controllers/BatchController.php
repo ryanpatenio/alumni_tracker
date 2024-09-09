@@ -32,7 +32,7 @@ class BatchController extends BE_Controller{
         $receiveData = $this->message;
 
         #validation
-        $req_fields = ['batch_name','adviser_id','student_id'];
+        $req_fields = ['batch_name'];
         $val_res = formValidator($receiveData,$req_fields);
 
         if($val_res['code'] === EXIT_FORM_NULL){
@@ -41,11 +41,9 @@ class BatchController extends BE_Controller{
         }
 
         $batch_name = $receiveData['batch_name'];
-        $adviser_id = $receiveData['adviser_id'];
-        $student_id = $receiveData['student_id'];
-
-        $query = "INSERT INTO batch (batch_name,adviser_id,student_id) VALUES(?,?,?,'A')";
-        $params = [$batch_name,$adviser_id,$student_id];
+    
+        $query = "INSERT INTO batch (batch_name) VALUES(?)";
+        $params = [$batch_name];
 
         $result = $this->Common_model->regular_query($query,$params);
 
