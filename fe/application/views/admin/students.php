@@ -23,7 +23,7 @@
             <i class="fas fa-table"></i>
             <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
         </div>
-
+         
           <div class="card-body">
             <div class="table-responsive">
               <table class="table datatable table-light" id="dataTable" width="100%" cellspacing="0">
@@ -38,20 +38,22 @@
                 
                 <tbody>
                 <?php
-                $i = 1;
-                foreach ($Students as $student) { ?>
-                  
-                  <tr>
-                      <td><?= $i; ?></td>
-                      <td><?= $student['name'];?></td>
-                      
-                      <td>
-                        <button type="button" id="edit_job_btn" data-id="<?= $student['student_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
-                        <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
-                      </td>
-                  </tr>
+                  $i = 1;
+                
+                  foreach ($Students as $student) { ?>
+                     
+                    <tr>
+                        <td><?= $i; ?></td>
+                        <td><?= $student['name'];?></td>
+                        
+                        <td>
+                          <button type="button" id="edit_job_btn" data-id="<?= $student['student_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+                          <!--  <button type="button" class="btn btn-secondary bi bi-folder-symlink"> Archive</button> -->
+                        </td>
+                    </tr>
+  
+                 <?php $i++; }
 
-               <?php $i++; }
                              
                 
                 ?>  

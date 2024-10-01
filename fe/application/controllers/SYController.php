@@ -1,6 +1,6 @@
 <?php
 
-class SYController extends CI_Controller{
+class SYController extends UI_Controller{
 
     public function __construct()
     {
@@ -9,7 +9,7 @@ class SYController extends CI_Controller{
     }
 
    public function index(){
-    $req_data = [];
+    $req_data = default_req_data();
   
     $api_endpoint 		= api_url('SYController/GetAll');
     $api_res 			= send_request($req_data, $api_endpoint);

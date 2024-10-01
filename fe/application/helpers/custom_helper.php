@@ -15,3 +15,12 @@ if( ! function_exists('current_datetime') ) {
         return date( $format );
     }
 }
+
+#this is for index that send request in backend with empty array
+if ( ! function_exists('default_req_data')) {
+    function default_req_data() {
+        return [
+            "message" => []
+        ];
+    }
+}

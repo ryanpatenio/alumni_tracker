@@ -11,6 +11,7 @@
       </nav>
     </div><!-- End Page Title -->
 
+    
 
     <section class="section profile">
 
@@ -21,7 +22,7 @@
         <div class="card mb-3">
           <div class="card-header">
             <i class="fas fa-table"></i>
-            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#productModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
+            <button class="btn btn-sm btn-primary" data-bs-toggle="modal" data-bs-target="#addModal" type="button"><i class="bi bi-plus-circle"> New</i></button>
         </div>
 
           <div class="card-body">
@@ -38,7 +39,21 @@
                 
                 <tbody>
              
-       
+       <?php
+       $i = 1;
+        foreach ($batches as $batch) { ?>
+          
+          <tr>
+            <td><?=$i;?></td>
+            <td><?=$batch['batch_name'];?></td>
+            <td>
+              <button type="button" id="edit_btn" data-id="<?= $batch['batch_id'];?>" class="btn btn-warning bi bi-pencil"> Modify</button>
+              <button type="button" id="delete_btn" data-id="<?= $batch['batch_id'];?>" class="btn btn-danger bi bi-trash"> Delete</button>
+            </td>
+          </tr>
+
+      <?php $i++; }
+       ?>
             
                
 
@@ -59,8 +74,8 @@
 <!--------------All Modal-------------------->
   
 
-    <div class="modal fade" id="productModal" tabindex="-1">
-        <div class="modal-dialog modal-lg">
+    <div class="modal fade" id="addModal" tabindex="-1">
+        <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
               <h5 class="modal-title">Encode New Batch</h5>
@@ -74,26 +89,11 @@
                   <div class="row mb-2">
                     <div class="col">
                       <label for="validationDefault01" class="form-label">Batch Name</label>                  
-                      <input type="text" class="form-control" name="prof_name" id=""  required>  
+                      <input type="text" class="form-control" name="batch_name" id=""  required>  
                     </div>
                     
                   </div>
-                  
-                  <div class="row mb-2">
-                    <div class="col">
-                      <label for="validationDefault01" class="form-label">Advisory Record</label>                  
-                      <select name="adv-records" id="adv-records" class="form-control">
-                        <option value="">Prof Ryan SY-2023 | BSIT</option>
-                      </select>  
-                    </div>
-                    
-                  </div>
-
-
-                  
-
-                 
-                  
+                      
                 </div>                       
               
             </div>
@@ -110,20 +110,20 @@
         <div class="modal-dialog">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title">Edit Product</h5>
+              <h5 class="modal-title">Edit Batch</h5>
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
               <form method="POST" id="updateForm" >
 
                 <!-- hidden product ID --> 
-                <input type="hidden" id="product-id" name="product_id">
+                <input type="hidden" id="id" name="id">
                 <div class="card-body">
 
                   <div class="row mb-2">
                     <div class="col">
-                      <label for="validationDefault01" class="form-label">Product Name</label>                  
-                      <input type="text" class="form-control" name="product_name" id="product-name"  required>  
+                      <label for="validationDefault01" class="form-label">Batch Name</label>                  
+                      <input type="text" class="form-control" name="batch_name" id="batch-name"  required>  
                     </div>
                   </div>
                   
@@ -143,5 +143,5 @@
 <!---------------end of all Modal---------------------->
 
   </main> <!------------- end of Main ----->
- <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/Product.js"></script>
+ <script type="text/javascript" src="<?= base_url();?>assets/admin-assets/ajax/batch.js"></script>
   

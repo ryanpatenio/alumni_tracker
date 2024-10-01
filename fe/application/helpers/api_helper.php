@@ -84,31 +84,47 @@ if( ! function_exists('send_request') ) {
 
 	function send_request($user_data, $api_endpoint, array $header = ['Content-Type: application/json']) {
 		$ci_instance =& get_instance();
+		
+
+		$access_token = get_instance()->session->token;		
+		$username = $ci_instance->session->username; // Get the session username
+
+		if( ! is_null($access_token)) {
+			$auth_header = 'Authorization: Bearer ' . $access_token;
+			array_push($header, $auth_header);
+
+		}
+
+		//log_message('error', 'Session username in send_request: ' . (is_null($username) ? 'NULL' : $username));
 
 
-		// $access_token = get_instance()->session->token;
-
-		// if( ! is_null($access_token)) {
-		// 	$auth_header = 'Authorization: Bearer ' . $access_token;
-		// 	array_push($header, $auth_header);
-
-		// }
+        // Log the session username
+        // if (is_null($username)) {
+        //     log_message('error', 'Sessionsss username is null');
+        // } else {
+        //     log_message('error', 'Sessionss username: ' . $username);
+        // }
 
 
 		if( ! isset($user_data['message'])) {
+			
 			$post_data['message'] = $user_data;
 
 		} else {
 			$post_data = $user_data;
+		//	log_message('error', 'Username received FE: ' . get_instance()->session->username);
 
-			//  if( ! isset($user_data['message']['info'])) {
-			//  	$post_data['message']['info'] = ['user' => get_instance()->session->username];
+			 if( ! isset($user_data['message']['info'])) {
+			 	$post_data['message']['info'] = ['user' => $username];
 
-			//  }
-
+			 }
+			
 		}
+		//('error', 'Final request data: ' . print_r($post_data, true));
+
 
         $post_data = (is_object($post_data) ? $post_data : json_encode($post_data));
+		//log_message('error', 'User Data received: ' . print_r($post_data, true));
 
 		// Initialize cURL session
         $curl = curl_init();

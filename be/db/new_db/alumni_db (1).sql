@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.0
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 09, 2024 at 04:55 PM
--- Server version: 10.4.25-MariaDB
--- PHP Version: 8.1.10
+-- Generation Time: Oct 01, 2024 at 09:30 PM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -32,36 +32,47 @@ CREATE TABLE `access_token` (
   `token` varchar(255) NOT NULL DEFAULT '0',
   `user_id` varchar(255) NOT NULL DEFAULT '0',
   `ip_address` varchar(255) NOT NULL DEFAULT '0',
-  `update_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `update_date` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `status` varchar(50) NOT NULL DEFAULT 'A'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `access_token`
 --
 
-INSERT INTO `access_token` (`id`, `token`, `user_id`, `ip_address`, `update_date`) VALUES
-(47, 'e60af1879640c38650aa31849fa908044ddcaa314d956bae88e4651c6fdad42e', '1', '::1', '2024-07-24 05:32:40'),
-(48, 'c031bd0ad72efdc71919c1925c4d8d153774411470905642ac8edc8d2218441f', '1', '::1', '2024-07-24 05:32:40'),
-(49, '57084a81d67c6e1bfd5bf0605520ab7151ed491d1eafa50765cb1397718f2e2c', '1', '::1', '2024-07-24 05:32:40'),
-(50, '14114cf220bf1358c55422db806c668e8b1d23d5fb78a9aed78ef9be8533a702', '1', '::1', '2024-07-24 05:32:40'),
-(51, '8c47ca6aa319f319bb012f8b43c6d3c160b59125875ae1893c44757bc43692b1', '1', '::1', '2024-07-24 05:32:40'),
-(52, '44e84157b5530bac7e48a5796845a60ff385899619f45e4eaf2bfb3dd9e18cd5', '1', '::1', '2024-07-24 05:32:40'),
-(53, '2d211466cd99afa9a8baf36480d2b25dfee46332ceba7930d1f2972b3926d975', '1', '::1', '2024-07-24 05:32:40'),
-(54, '8becc4555123723ffb9b2eb510b5759ee0fdde1bb3c3ebaf5a7cfafe0da357dc', '1', '::1', '2024-07-24 05:32:40'),
-(55, '4a9ceae42c6d440c89a96fdff1a1405d2cb47530322996554e83eb6fce2465f5', '1', '::1', '2024-07-24 05:32:40'),
-(56, '4725f659f60adef4052d53a76886dd6427bfc1113ce07f50cc6a147ed78f6cac', '1', '::1', '2024-07-24 05:38:14'),
-(57, '19734215b047fe252e160d213e51a5dbff5f1580f2146f580172307e86d678c1', '1', '::1', '2024-07-24 05:38:59'),
-(58, '2bcd5ca726664f0637aca12387c7cf8917b48dc66737b12f1a0e2c30f99ceb6d', '1', '::1', '2024-08-13 21:39:55'),
-(59, 'd4153747a2ce7aa4fbcbe97c286c3c9396eb0243a3eb0840ed19b7f7b78d824d', '1', '::1', '2024-08-19 03:39:02'),
-(60, '57a5389a992a8dd4880f87f0c0da4c7c7ce37432023410a94cfbc543652a4d5e', '1', '::1', '2024-08-19 03:40:13'),
-(61, '13758242f9f276b417abfede8cffa7d47c70e19b4342c2813e262fdc3b81247c', '1', '::1', '2024-08-19 19:27:15'),
-(62, '6d24b8e87362f1efa29c9a2da432ebd79cdad299e4b6fb44b2eed725a33fbf52', '1', '::1', '2024-08-21 02:06:44'),
-(63, 'd8627689345bb7e9b87cd41dde7681020d4b1fd2c627e94174b106ddfdd94d0e', '2', '::1', '2024-08-21 02:07:11'),
-(64, '6631291cb9c4aa3850181f06da1d5a168449765b48501b51bf81539277991afc', '2', '::1', '2024-08-22 20:50:49'),
-(65, '94e2ae00ffcb7d15b39c11c365a98ee60bb3502f4f0e3f8527a1f7381fa19d33', '1', '::1', '2024-08-29 01:37:10'),
-(66, '1b724f1709d7080550cd17042c80cc8343862134b2f64d508a2ec792b0baef1f', '1', '::1', '2024-08-30 16:34:39'),
-(67, '187c3b67467eb937aaf516be8dd39b4925054390058df6a902416f0b20e2e52b', '1', '::1', '2024-09-01 09:21:29'),
-(68, 'aaf0975c13fda62a180b37595ef7f1f2124bf83317fd28e9c125c7be30d36bcd', '1', '::1', '2024-09-03 10:30:17');
+INSERT INTO `access_token` (`id`, `token`, `user_id`, `ip_address`, `update_date`, `status`) VALUES
+(132, 'c2604cee20bb51257dbf5664db7befe3563237b02658ad3c99666692b4e31171', '1', '::1', '2024-09-29 03:48:24', 'U'),
+(133, '43726862c3c600660f6a61546922207d8f56710d7e96e346ed412083f4309dc5', '1', '::12323', '2024-09-29 03:53:20', 'U'),
+(134, '6c7395f3126169c564a9ebb66f3430d6ae85eb4969525a094d0da97c0ec3cc42', '1', '::13232', '2024-09-29 03:53:23', 'U'),
+(135, '66de6df54f6e3baf886778c048ac8923b606c6c33ac169f5e7c98e5c583e59fb', '1', '::1', '2024-09-29 03:53:54', 'U'),
+(136, 'a2381caa065abce93f68f909f0d8f495fa2c8f979653754d2554f1b8f4923954', '1', '::1', '2024-09-29 03:54:40', 'U'),
+(137, '25ba5288f6e7925b2831bda1b6bb4553980d9fd2f6e4a7e84dc734c4d3308b94', '1', '::1', '2024-09-29 03:55:08', 'U'),
+(138, 'b7204e2b784d12b5b8aaa8fa6f53ba74eac32ceec32d9da95d2a2253949f7937', '2', '::1', '2024-09-29 03:56:15', 'U'),
+(139, '0b7977444e4b80ef392e13dd9fa8392f973945204fc06c5ff182c4ce2b2e1d0d', '1', '::1', '2024-09-29 04:02:03', 'U'),
+(140, '4b6de92e5d276c88815caa4ce3351bff872f6894912edd023be796667ff0397b', '2', '::1', '2024-09-29 04:02:06', 'U'),
+(141, '54900a878bab756b0f51678f57a41653f484641bb1553abdcf46b2911f8b0ca9', '2', '::1', '2024-09-29 04:01:44', 'U'),
+(142, '2a4d5ec44f7108abf7fb1f51669fe43ff2efd3b144f60aef9b798ddfa445d8c6', '2', '::1', '2024-09-29 04:03:59', 'U'),
+(143, '4e1e7ea378eae0a0189ff4c9a4b094a45a7f4d59bafaab7e5044a7f223d0b36d', '1', '::1', '2024-09-29 04:02:56', 'U'),
+(144, '2d7d76f3e17e32d2fb98dd9672ca1db75d85e7ae7d1689fc8791262e44ab25cd', '1', '::1', '2024-09-29 04:10:07', 'U'),
+(145, '0d52cae9a9b7bdfd08e4e8789e29d34ac54a4bc18ff1904b785216d5104c5f8b', '2', '::1', '2024-09-29 04:14:36', 'U'),
+(146, 'c5048eb45a80fb281c5edcb7152f8014ee47214dbd2279a574683b2569cc9411', '1', '::1', '2024-09-29 04:13:36', 'U'),
+(147, '33b52f66e4c499a04407dc85a15ac3fda828df34bfcca9eb6ad4340b107a017e', '1', '::1', '2024-09-29 04:14:03', 'U'),
+(148, '13d0f9fdfe22cbed23b5b66941ccea35bb35ea47bcbb33aa5121ca8376517f4d', '1', '::1', '2024-09-29 04:15:16', 'U'),
+(149, 'e189ad4c653acc5b5de693e59c8604f0aa1fcdf6f8827e077673ef7b0ff22a2a', '2', '::1', '2024-09-29 04:17:26', 'U'),
+(150, '65f87bb6811e93b8d54c7c0dfc25020e001c8198683794f064742b066c58f00b', '1', '::1', '2024-09-29 04:16:59', 'U'),
+(151, 'a86bea4d84bba39c5ee34a30a6e126d8da60e12362490bccfc1e9d861bb30c80', '1', '::1', '2024-09-29 04:23:38', 'U'),
+(152, '463814eac07c7b1a119155e08bee07ef02bffa751c9253ddcffd38f99a149e26', '2', '::1', '2024-09-29 04:47:08', 'U'),
+(153, '9d1c9bd38f071cc2265e2d623599c51dc7833b7b68626b1cf8b67c085c78768e', '1', '::1', '2024-09-29 04:23:38', 'U'),
+(154, '530e4fed902192cb63498a4d5e50f45c8df0ee4b9046d21dc7a3126bfc294aa4', '1', '::1', '2024-09-29 04:23:38', 'U'),
+(155, '63dc6066d5100d1c680c93d7aa4b5e413788ae308d4f5fa9134e865abd750b4d', '1', '::1', '2024-09-29 04:33:16', 'U'),
+(156, '03d225daefb54560322fd5d781658d41d8c8282d4074a10bb4f125c67a49806b', '1', '::1', '2024-09-29 04:46:44', 'U'),
+(157, '3eb99ce1e54c0335b264f8fd180e139ff06edab7941c1b70c9e90b750b2b2237', '1', '::1', '2024-09-29 04:45:13', 'U'),
+(158, 'fd1b04f456dd4169caed542ccd5176e3a523ac845e50dad9fec790e30dd6e6a7', '1', '::1', '2024-09-29 04:45:48', 'U'),
+(159, '987bb46d03b047d7d5e9f58b691e5c07c9f7aabf56a8a21c615e324e96e912bf', '1', '::1', '2024-09-29 04:46:54', 'U'),
+(160, 'f72b3fa33bd71c79d0f2d6ad8948f2ca68109ab31ef7dd1f8927514c81eab9ae', '1', '::1', '2024-09-29 04:47:13', 'A'),
+(161, 'b235f813ef41631081c684ee7ef7a9e3de48a1c684da8c11fc113fdbeb968dfb', '2', '::1', '2024-09-29 04:49:49', 'U'),
+(162, 'dca231ad9ced8ec2420f9fd490adb43a0cc070e3e0bd579241c36773ff8eb62a', '2', '::1', '2024-09-29 04:50:51', 'U'),
+(163, 'deca362ea49f0157dbe6def859b5091daddaf54ed746cae6d16a15f207b00929', '2', '::1', '2024-09-29 04:45:41', 'A');
 
 -- --------------------------------------------------------
 
@@ -76,7 +87,7 @@ CREATE TABLE `advisory_details` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` varchar(50) NOT NULL DEFAULT 'A'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -94,7 +105,7 @@ CREATE TABLE `advisor_records` (
   `status` varchar(50) NOT NULL DEFAULT 'A',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `advisor_records`
@@ -102,7 +113,8 @@ CREATE TABLE `advisor_records` (
 
 INSERT INTO `advisor_records` (`advisor_id`, `batch_id`, `prof_id`, `sy_id`, `course_id`, `sect_id`, `status`, `date_created`, `last_updated`) VALUES
 (1, 1, 17, 1, 4, 1, 'A', '2024-08-29 02:09:49', '2024-09-09 16:41:43'),
-(3, 1, 18, 1, 3, 1, 'U', '2024-09-09 21:55:07', '2024-09-09 16:39:53');
+(3, 1, 18, 1, 3, 1, 'U', '2024-09-09 21:55:07', '2024-09-09 16:39:53'),
+(4, 1, 17, 1, 3, 1, 'A', '2024-09-24 03:31:52', NULL);
 
 -- --------------------------------------------------------
 
@@ -115,7 +127,7 @@ CREATE TABLE `alumni_sessions` (
   `ip_address` varchar(45) NOT NULL,
   `timestamp` int(10) UNSIGNED NOT NULL DEFAULT 0,
   `data` blob NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -130,14 +142,15 @@ CREATE TABLE `batch` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` varchar(50) NOT NULL DEFAULT 'A'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `batch`
 --
 
 INSERT INTO `batch` (`batch_id`, `batch_name`, `isUse`, `date_created`, `last_updated`, `status`) VALUES
-(1, 'Batch Matatag 2023', 0, '2024-08-29 02:50:56', '2024-09-09 21:11:33', 'A');
+(1, 'Batch Matatag 2023', 0, '2024-08-29 02:50:56', '2024-09-09 21:11:33', 'A'),
+(3, 'Masipag', 0, '2024-09-24 03:42:12', '2024-09-24 04:11:55', 'A');
 
 -- --------------------------------------------------------
 
@@ -148,7 +161,7 @@ INSERT INTO `batch` (`batch_id`, `batch_name`, `isUse`, `date_created`, `last_up
 CREATE TABLE `capabilities` (
   `cap_id` int(11) NOT NULL,
   `cap` varchar(50) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `capabilities`
@@ -173,7 +186,7 @@ CREATE TABLE `courses` (
   `status` varchar(50) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `courses`
@@ -195,7 +208,7 @@ CREATE TABLE `error_codes` (
   `controller` varchar(255) NOT NULL,
   `code` char(4) NOT NULL,
   `message` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `error_codes`
@@ -217,7 +230,7 @@ CREATE TABLE `number` (
   `status` varchar(50) NOT NULL DEFAULT 'A',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `number`
@@ -249,14 +262,14 @@ CREATE TABLE `professor` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime DEFAULT NULL,
   `status` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `professor`
 --
 
 INSERT INTO `professor` (`prof_id`, `name`, `email`, `contact`, `address`, `degree`, `date_created`, `last_updated`, `status`) VALUES
-(17, 'Henry Cabell', 'henryCabel@gmail.com', '09484883888', 'Sipalay City, Negros Occidental', 'MIT', '2024-08-19 07:52:42', '2024-09-01 04:41:51', 'A'),
+(17, 'Henry Cabell', 'henryCabel@gmail.com', '09484883888', 'Sipalay City, Negros Occidental', 'MIT', '2024-08-19 07:52:42', '2024-09-29 00:46:37', 'A'),
 (18, 'Mike Tan', 'miketan@gmail.com', '09388588388', 'sampleAddress', 'MIT', '2024-08-22 20:56:52', '2024-08-22 20:56:52', 'A'),
 (19, 'Henry MacArthur', 'henrymacarthur@gmail.com', '09998384883', 'Bacolod City', 'MIT', '2024-08-22 22:24:00', '2024-08-22 20:44:35', 'A'),
 (21, 'Kerr Arvin Tabligan', 'kerr@gmail.com', '09992988488', 'Brgy Mambaroto, Sipalay City, Negros Occidental', 'MIT | CSC', '2024-09-01 09:22:37', NULL, 'A');
@@ -273,7 +286,7 @@ CREATE TABLE `sections` (
   `status` char(50) NOT NULL DEFAULT 'A',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sections`
@@ -304,7 +317,7 @@ CREATE TABLE `students` (
   `student_status` varchar(50) NOT NULL DEFAULT '0',
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `students`
@@ -328,7 +341,7 @@ CREATE TABLE `sy` (
   `date_created` datetime NOT NULL DEFAULT current_timestamp(),
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `status` varchar(50) NOT NULL DEFAULT 'A'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `sy`
@@ -357,15 +370,15 @@ CREATE TABLE `users` (
   `last_login_date` datetime DEFAULT NULL,
   `last_logout_date` datetime DEFAULT NULL,
   `last_updated` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`user_id`, `name`, `email`, `password`, `status`, `type`, `avatar`, `date_created`, `last_login_date`, `last_logout_date`, `last_updated`) VALUES
-(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$JUbVctsIHEaSV.zYc6LsPuxRGvjnt25PgKB.o9un8WnuZL4oduvOe', 'A', '1', 'asdadasd', '2024-07-20 16:49:26', '2024-09-03 10:30:17', '2024-08-29 03:24:56', '2024-09-03 10:30:17'),
-(2, 'James Henry', 'james@gmail.com', '$2y$10$DNSiohSIu02kNGm97LlEJ.vhgrdQsscfga9ksA4DEhpIJayrANouq', 'A', '1', 'qwer', '2024-08-20 23:57:42', '2024-08-22 20:50:49', '2024-08-20 23:57:43', '2024-08-25 01:34:59');
+(1, 'Ryan Wong', 'ryanwong@gmail.com', '$2y$10$JUbVctsIHEaSV.zYc6LsPuxRGvjnt25PgKB.o9un8WnuZL4oduvOe', 'A', '1', 'asdadasd', '2024-07-20 16:49:26', '2024-09-29 04:46:54', '2024-09-29 04:41:58', '2024-09-29 04:46:54'),
+(2, 'James Henry', 'james@gmail.com', '$2y$10$DNSiohSIu02kNGm97LlEJ.vhgrdQsscfga9ksA4DEhpIJayrANouq', 'A', '1', 'qwer', '2024-08-20 23:57:42', '2024-09-29 04:50:51', '2024-09-29 04:50:37', '2024-09-29 04:50:51');
 
 -- --------------------------------------------------------
 
@@ -379,7 +392,7 @@ CREATE TABLE `user_activity_logs` (
   `activity` varchar(100) NOT NULL DEFAULT '0',
   `target` varchar(100) NOT NULL DEFAULT '0',
   `do_date` datetime NOT NULL DEFAULT current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -391,7 +404,7 @@ CREATE TABLE `user_capabilities` (
   `id` int(11) NOT NULL,
   `capabilities_id` int(11) NOT NULL DEFAULT 0,
   `user_id` int(11) NOT NULL DEFAULT 0
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `user_capabilities`
@@ -413,8 +426,48 @@ INSERT INTO `user_capabilities` (`id`, `capabilities_id`, `user_id`) VALUES
 CREATE TABLE `user_logs` (
   `log_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
-  `date_log_in` datetime NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  `email` varchar(50) NOT NULL,
+  `date_log_in` datetime NOT NULL DEFAULT current_timestamp(),
+  `date_logout` datetime DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_logs`
+--
+
+INSERT INTO `user_logs` (`log_id`, `user_id`, `email`, `date_log_in`, `date_logout`) VALUES
+(17, 1, 'ryanwong@gmail.com', '2024-09-29 03:40:33', NULL),
+(18, 1, 'ryanwong@gmail.com', '2024-09-29 03:48:24', NULL),
+(19, 1, 'ryanwong@gmail.com', '2024-09-29 03:48:47', NULL),
+(20, 1, 'ryanwong@gmail.com', '2024-09-29 03:53:34', NULL),
+(21, 1, 'ryanwong@gmail.com', '2024-09-29 03:53:54', NULL),
+(22, 1, 'ryanwong@gmail.com', '2024-09-29 03:54:40', NULL),
+(23, 2, 'james@gmail.com', '2024-09-29 03:55:08', NULL),
+(24, 1, 'ryanwong@gmail.com', '2024-09-29 03:56:15', NULL),
+(25, 2, 'james@gmail.com', '2024-09-29 03:58:39', NULL),
+(26, 2, 'james@gmail.com', '2024-09-29 03:59:18', NULL),
+(27, 2, 'james@gmail.com', '2024-09-29 04:02:19', NULL),
+(28, 1, 'ryanwong@gmail.com', '2024-09-29 04:02:29', NULL),
+(29, 1, 'ryanwong@gmail.com', '2024-09-29 04:02:56', NULL),
+(30, 2, 'james@gmail.com', '2024-09-29 04:03:59', NULL),
+(31, 1, 'ryanwong@gmail.com', '2024-09-29 04:10:07', NULL),
+(32, 1, 'ryanwong@gmail.com', '2024-09-29 04:13:36', NULL),
+(33, 1, 'ryanwong@gmail.com', '2024-09-29 04:14:03', NULL),
+(34, 2, 'james@gmail.com', '2024-09-29 04:14:36', NULL),
+(35, 1, 'ryanwong@gmail.com', '2024-09-29 04:15:16', NULL),
+(36, 1, 'ryanwong@gmail.com', '2024-09-29 04:16:59', NULL),
+(37, 2, 'james@gmail.com', '2024-09-29 04:17:26', NULL),
+(38, 1, 'ryanwong@gmail.com', '2024-09-29 04:23:01', NULL),
+(39, 1, 'ryanwong@gmail.com', '2024-09-29 04:23:19', NULL),
+(40, 1, 'ryanwong@gmail.com', '2024-09-29 04:23:38', NULL),
+(41, 1, 'ryanwong@gmail.com', '2024-09-29 04:33:16', NULL),
+(42, 1, 'ryanwong@gmail.com', '2024-09-29 04:45:13', NULL),
+(43, 1, 'ryanwong@gmail.com', '2024-09-29 04:45:48', NULL),
+(44, 1, 'ryanwong@gmail.com', '2024-09-29 04:46:44', NULL),
+(45, 1, 'ryanwong@gmail.com', '2024-09-29 04:46:54', NULL),
+(46, 2, 'james@gmail.com', '2024-09-29 04:47:08', NULL),
+(47, 2, 'james@gmail.com', '2024-09-29 04:49:49', NULL),
+(48, 2, 'james@gmail.com', '2024-09-29 04:50:51', NULL);
 
 --
 -- Indexes for dumped tables
@@ -543,7 +596,7 @@ ALTER TABLE `user_logs`
 -- AUTO_INCREMENT for table `access_token`
 --
 ALTER TABLE `access_token`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=69;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=164;
 
 --
 -- AUTO_INCREMENT for table `advisory_details`
@@ -555,13 +608,13 @@ ALTER TABLE `advisory_details`
 -- AUTO_INCREMENT for table `advisor_records`
 --
 ALTER TABLE `advisor_records`
-  MODIFY `advisor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `advisor_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `batch`
 --
 ALTER TABLE `batch`
-  MODIFY `batch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `batch_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `capabilities`
@@ -633,7 +686,7 @@ ALTER TABLE `user_capabilities`
 -- AUTO_INCREMENT for table `user_logs`
 --
 ALTER TABLE `user_logs`
-  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `log_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

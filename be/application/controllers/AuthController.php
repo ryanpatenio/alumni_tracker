@@ -12,15 +12,15 @@ class AuthController extends BE_Controller{
     }
 
     public function login(){
-        #$payload = $this->message['info'];
-        $username = $this->message['username'];
-        $password = $this->message['password'];
+        $payload = $this->message['info'];
+        // $username = $this->message['username'];
+        // $password = $this->message['password'];
 
 		// Log incoming request
 		log_message('debug', 'Login attempt: ' . json_encode($this->message));
 
 
-        if(empty($username) || empty($password)) {
+        if(empty($payload['user']) || empty($payload['password'])) {
 			$this->be_exception->show_result([
 				'code'		=> EXIT_BE_ERROR,
 				'message'	=> error_code(0002)['pretty'],
@@ -28,16 +28,9 @@ class AuthController extends BE_Controller{
            
 		}
         
-		// $params = [
-		// 	'select'		=> '*',
-		// 	'where'			=> [
-		// 		'email'		=> $username
-		// 	],
-		// 	'limit'			=> 1
-		// ];
 
-		$query = "SELECT * from users WHERE email = ? ";
-		$params = [$username];
+		$query = "SELECT * from users WHERE email = ? LIMIT 1 ";
+		$params = [$payload['user']];
 		$user_inquire = $this->Common_model->regular_query($query,$params);
        
 		// Log query result
@@ -55,7 +48,7 @@ class AuthController extends BE_Controller{
 		$user = $user_inquire[0];
         $pw_hash = $user->password;
 
-		if( ! password_verify($password, $pw_hash)) {
+		if( ! password_verify($payload['password'], $pw_hash)) {
 			$this->be_exception->show_result([
 				'code'		=> EXIT_BE_ERROR,
 				'message'	=> 'Invalid Username OR Password'
@@ -71,17 +64,22 @@ class AuthController extends BE_Controller{
 			'ip_address'	=> $this->input->ip_address()
 		];	
 
+		$insert_id = [
+			'user_id'  => $user->user_id,
+			'email'	   => $user->email
+		];
 
 		$n_email = $user->email;
 		$update_query = "UPDATE users set last_login_date = ? WHERE email = ?";
 		$param = [current_datetime(),$n_email];
 
 		// Log update query
-		log_message('debug', 'Update query: ' . $update_query . ' Params: ' . json_encode($param));
+		//log_message('debug', 'Update query: ' . $update_query . ' Params: ' . json_encode($param));
 
 
        	$this->Common_model->insert('access_token', $insert_data);
 		$this->Common_model->regular_query($update_query,$param);#update user last login Date
+		$user_log_id = $this->Common_model->insert('user_logs',$insert_id);
 
 
 		$user_capabilities = [
@@ -99,12 +97,15 @@ class AuthController extends BE_Controller{
 			'code'		=> EXIT_SUCCESS,
 			'message'	=> OK,
 			'token'     =>$insert_data['token'],
-				'data'		=> [
-				'email'					=> $n_email,
-				'name'			=> $user->name,
-				'type'					=> $user->type,
+			'data'		=> [
+
+				'email'	   => $n_email,
+				'username' => $n_email,
+				'name'	   => $user->name,
+				'type'	   => $user->type,
+				'user_logs' => $user_log_id		#user log last inserted id	
+				],
 				
-			],
 			'capabilities'	=> $user_capabilities
 		]);
 
@@ -135,5 +136,16 @@ class AuthController extends BE_Controller{
 	function current_dt( $format = 'Y-m-d H:i:s' ) {
         return date( $format );
     }
+
+	#this method is for user_logs table in DB
+	public function user_logout(){
+		$log_id = $this->message['filter'];
+		$query = "UPDATE user_logs SET date_logout = ? WHERE log_id = ?";
+		$params = [current_datetime(),$log_id];
+
+		//update last logout date of the user
+		$this->Common_model->regular_query($query,$params);
+	}
+	
 
 }

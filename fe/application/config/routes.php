@@ -6,7 +6,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['dashboard'] = 'dashboard';
 $route['students'] = 'studentController';
 $route['professor'] = 'professorController';
-$route['batch'] = 'BatchController';
+$route['batch'] = 'BatchController/Index';
 $route['courses'] = 'CourseController';
 $route['adv-records'] = 'AdvisoryRecordsController';
 $route['sections'] = 'SectionController';

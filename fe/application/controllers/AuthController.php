@@ -45,30 +45,14 @@ class AuthController extends CI_Controller{
 
 		$post_data = [
 			
-			'message'=>[
-						'username'=> $username,
-						'password'=> $password
+			'info'=> [
+				'user'=> $username,
+				'password'=> $password
 		]
 	];
 
 		$api_endpoint = api_url('authController/login');
 		$api_response = send_request($post_data, $api_endpoint);
-
-		
-		// if(is_success($api_response['code'])) {
-		// 	$this->session->set_userdata($api_response['data']);
-		// 	$this->session->set_userdata('capabilities', $api_response['capabilities']);
-		// 	$this->session->set_userdata('token', $api_response['token']);
-
-		// 	redirect(site_url('dashboard'));
-			
-		// } else {
-			
-		// 	//flash_message($api_response['message'], 'danger');
-		// 	redirect(site_url());
-
-		// }
-
 
 		if(is_success($api_response['code'])){
 			//echo 'success'.' I-  '.$api_response['code'].'- '.json_encode($api_response['data']);
@@ -82,6 +66,7 @@ class AuthController extends CI_Controller{
 		}else{
 
 			flash_message($api_response['message'], 'danger');
+			//json_response($api_response['code'],200);
 			redirect(site_url());
 
 		}
@@ -106,9 +91,6 @@ class AuthController extends CI_Controller{
 		redirect(site_url(''));
 
 	} // END method -- logout();
-
-
-
 
 	public function blocked()
     {

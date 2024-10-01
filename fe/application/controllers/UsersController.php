@@ -1,6 +1,6 @@
 <?php
 
-class UsersController extends CI_Controller{
+class UsersController extends UI_Controller{
 
     public function __construct()
     {
@@ -14,7 +14,7 @@ class UsersController extends CI_Controller{
     $api_endpoint 		= api_url('UserController/GetAll');
     $api_res 			= send_request($req_data, $api_endpoint);
 
-    //$data['Products'] 	= $api_res['result'];
+   # $data['users'] 	= $api_res['data'];
     $data['page_title'] = '';
     $data['sidebar']    = '_partials/sidebar';
     $data['content']    = 'admin/users'; 

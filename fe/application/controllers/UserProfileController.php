@@ -2,7 +2,7 @@
 
 use PhpParser\Node\Stmt\Foreach_;
 
-class UserProfileController extends CI_Controller{
+class UserProfileController extends UI_Controller{
 
     public function __construct()
     {
@@ -11,7 +11,7 @@ class UserProfileController extends CI_Controller{
     }
 
    public function index(){
-    $req_data = [];
+    $req_data = default_req_data();
   
     $api_endpoint 		= api_url('UserProfileController/GetAll');
     $api_res 			= send_request($req_data, $api_endpoint);

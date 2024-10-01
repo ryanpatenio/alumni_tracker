@@ -1,7 +1,7 @@
 <?php 
 
 
-class Dashboard extends CI_Controller{
+class Dashboard extends UI_Controller{
     
     public function __construct()
     {

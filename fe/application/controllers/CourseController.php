@@ -1,6 +1,6 @@
 <?php
 
-class CourseController extends CI_Controller{
+class CourseController extends UI_Controller{
 
     public function __construct()
     {
@@ -8,7 +8,7 @@ class CourseController extends CI_Controller{
     }
 
     public function index(){
-        $req_data = [];
+        $req_data = default_req_data();
   
         $api_endpoint 		= api_url('CourseController/GetAll');
         $api_res 			= send_request($req_data, $api_endpoint);

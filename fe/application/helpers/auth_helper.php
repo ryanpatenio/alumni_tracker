@@ -3,15 +3,27 @@
 
 function is_logged_in()
 {
-    $agent_id = get_instance()->session->agent;
+    $agent_type = get_instance()->session->type;
 
-    if( ! $agent_id) {
+    if( ! $agent_type) {
         get_instance()->session->sess_destroy();
         flash_message('User not valid', 'danger');
-        redirect(site_url('login'));
+        redirect(site_url(''));
 
     }
 
+}
+
+function is_token_expired($api_code){
+    if($api_code === 101){
+        #Access Token Expired
+        #redirect to Login
+        
+        get_instance()->session->sess_destroy();
+        flash_message('Access Token Expired!', 'danger');
+        redirect(site_url());
+        
+    }
 }
 
 
@@ -19,12 +31,12 @@ function is_logged_in()
 
 function check_access()
 {
-    $agent_id = get_instance()->session->agent_id;
+    $agent_type = get_instance()->session->agent_type;
 
-    if( ! $agent_id) {
+    if( ! $agent_type) {
         get_instance()->session->sess_destroy();
         flash_message('User not valid', 'danger');
-        redirect(site_url('login'));
+        redirect(site_url(''));
 
     }
 

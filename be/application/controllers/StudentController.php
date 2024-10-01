@@ -86,7 +86,7 @@ class StudentController extends BE_Controller{
 
     }
 
-    public function getStudent(){
+    public function get(){
         $receiveData = $this->message;
 
         $req_fields = ['filter'];
